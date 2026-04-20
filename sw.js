@@ -1,4 +1,4 @@
-const CACHE_NAME = 'protocolo-ssci-cbsls-v5';
+const CACHE_NAME = 'protocolo-ssci-cbsls-v6';
 
 const ASSETS = [
   './',
