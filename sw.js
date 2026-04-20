@@ -1,4 +1,4 @@
-const CACHE_NAME = 'protocolo-ssci-cbsls-v1';
+const CACHE_NAME = 'protocolo-ssci-cbsls-v2';
 
 const ASSETS = [
   './',
@@ -19,9 +19,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((keys) =>
       Promise.all(
         keys.map((key) => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
+          if (key !== CACHE_NAME) return caches.delete(key);
           return null;
         })
       )
@@ -40,9 +38,7 @@ self.addEventListener('fetch', (event) => {
       return fetch(event.request)
         .then((response) => {
           const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, clone);
-          });
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
           return response;
         })
         .catch(() => caches.match('./index.html'));
