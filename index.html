@@ -121,17 +121,6 @@
       width:auto;
     }
     .btn-mini.sec{background:rgba(0,0,0,.08)}
-    #btnInstallTop{
-      display:none;
-      background:#075E54;
-      color:#fff;
-      box-shadow:0 4px 12px rgba(0,0,0,.18);
-    }
-    #btnInstallTop.show{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-    }
     .screen{display:none;padding:12px}
     .screen.active{display:block}
     .card{
@@ -344,6 +333,60 @@
       margin-top:8px;
     }
 
+    .install-card{
+      display:none;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 14px;
+      background:#f8f3ea;
+      border:1px solid var(--line);
+      border-radius:16px;
+      margin-bottom:12px;
+      box-shadow:var(--shadow);
+    }
+    .install-card.show{display:flex}
+    .install-card-text{
+      min-width:0;
+      flex:1;
+    }
+    .install-card-title{
+      font-size:14px;
+      font-weight:700;
+      color:#3b2c17;
+      margin-bottom:4px;
+    }
+    .install-card-sub{
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.4;
+    }
+    .install-card-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-shrink:0;
+    }
+    .install-card .btn-install-discreet{
+      width:auto;
+      min-width:unset;
+      padding:10px 12px;
+      border-radius:999px;
+      background:#075E54;
+      color:#fff;
+      font-size:12px;
+      font-weight:700;
+    }
+    .install-card .btn-close-discreet{
+      width:auto;
+      min-width:unset;
+      padding:8px 10px;
+      border-radius:999px;
+      background:#eee3d3;
+      color:#333;
+      font-size:12px;
+      font-weight:700;
+    }
     .hidden{display:none!important}
     @media (max-width:780px){
       .app{max-width:560px}
@@ -357,28 +400,6 @@
 </head>
 <body>
 
-  <div id="installHint">
-    <button id="installHintClose" type="button">×</button>
-    <strong>📱 Instalar como app</strong><br>
-    No iPhone/iPad, toque em <strong>Compartilhar</strong> e depois em <strong>Adicionar à Tela de Início</strong>.
-  </div>
-
-  <div id="manualInstallBox">
-    <div id="manualInstallCard">
-      <h3>📲 Como instalar</h3>
-      <p id="manualInstallText">Se a instalação automática não abrir, use a opção manual do navegador.</p>
-      <ol id="manualInstallSteps">
-        <li>Toque no menu <strong>⋮</strong> do Chrome.</li>
-        <li>Toque em <strong>Adicionar à tela inicial</strong> ou <strong>Instalar app</strong>.</li>
-        <li>Depois abra pelo ícone criado na tela inicial.</li>
-      </ol>
-      <div id="manualInstallActions">
-        <button id="manualInstallClose" type="button" class="btn-ghost">Fechar</button>
-        <button id="manualInstallOk" type="button" class="btn-primary">Entendi</button>
-      </div>
-    </div>
-  </div>
-
   <div class="app">
     <div class="topbar">
       <div class="topbar-inner">
@@ -390,8 +411,6 @@
           </div>
         </div>
         <div class="head-actions">
-          <button id="btnInstallTop" class="btn-mini" type="button">📲 Instalar</button>
-          <button id="btnHowInstallTop" class="btn-mini sec" type="button">❔ Como instalar</button>
           <div id="pillUser" class="pill">👤 Sem login</div>
           <div id="pillAdmin" class="pill hidden">🛡️ Admin</div>
           <button id="btnGoLogin" class="btn-mini" type="button">🔐 Entrar</button>
@@ -403,6 +422,17 @@
     <div id="mensagem" class="msg"></div>
 
     <section id="screen-home" class="screen active">
+      <div id="installCard" class="install-card">
+        <div class="install-card-text">
+          <div class="install-card-title">📲 Instalar como app</div>
+          <div class="install-card-sub">Adicione à tela inicial para abrir em modo app e tela cheia.</div>
+        </div>
+        <div class="install-card-actions">
+          <button id="btnInstallCard" class="btn-install-discreet" type="button">Instalar</button>
+          <button id="btnCloseInstallCard" class="btn-close-discreet" type="button">×</button>
+        </div>
+      </div>
+
       <div class="card">
         <h2>📊 Resumo dos Protocolos</h2>
         <div class="sub">Toque em uma caixa para abrir a lista já filtrada.</div>
@@ -1377,65 +1407,29 @@
       return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
     }
 
-    function showInstallButton(){
+    function showInstallCard(){
       if(isStandaloneMode()) return;
-      const btn = $('btnInstallTop');
-      if(btn) btn.classList.add('show');
+      if(localStorage.getItem('protocolo_install_card_closed') === '1') return;
+      const card = $('installCard');
+      if(card) card.classList.add('show');
     }
 
-    function hideInstallButton(){
-      const btn = $('btnInstallTop');
-      if(btn) btn.classList.remove('show');
-    }
-
-    function showInstallHint(){
-      if(isStandaloneMode()) return;
-      const hint = $('installHint');
-      if(!hint) return;
-      hint.classList.add('show');
-      clearTimeout(installHintTimer);
-      installHintTimer = setTimeout(() => hint.classList.remove('show'), 9000);
-    }
-
-    function hideInstallHint(){
-      const hint = $('installHint');
-      if(hint) hint.classList.remove('show');
-      clearTimeout(installHintTimer);
-    }
-
-    function showManualInstallBox(){
-      if(isStandaloneMode()) return;
-      const ua = navigator.userAgent.toLowerCase();
-      const isIOS = /iphone|ipad|ipod/.test(ua);
-      const text = $('manualInstallText');
-      const steps = $('manualInstallSteps');
-
-      if(isIOS){
-        text.textContent = 'No iPhone/iPad a instalação é manual pelo menu de compartilhamento.';
-        steps.innerHTML = '<li>Toque em <strong>Compartilhar</strong> no Safari.</li><li>Toque em <strong>Adicionar à Tela de Início</strong>.</li><li>Abra pelo ícone criado na tela inicial.</li>';
-      } else {
-        text.textContent = 'Se a instalação automática não abrir, use a opção manual do navegador.';
-        steps.innerHTML = '<li>Toque no menu <strong>⋮</strong> do Chrome.</li><li>Toque em <strong>Adicionar à tela inicial</strong> ou <strong>Instalar app</strong>.</li><li>Depois abra pelo ícone criado na tela inicial.</li>';
+    function hideInstallCard(savePreference=false){
+      const card = $('installCard');
+      if(card) card.classList.remove('show');
+      if(savePreference){
+        localStorage.setItem('protocolo_install_card_closed', '1');
       }
-      $('manualInstallBox').classList.add('show');
-    }
-
-    function hideManualInstallBox(){
-      $('manualInstallBox').classList.remove('show');
     }
 
     async function instalarApp(){
-      if(!deferredPrompt){
-        showManualInstallBox();
-        return;
-      }
-
+      if(!deferredPrompt) return;
       deferredPrompt.prompt();
       const choice = await deferredPrompt.userChoice;
       deferredPrompt = null;
-      hideInstallButton();
 
       if(choice && choice.outcome === 'accepted'){
+        hideInstallCard(true);
         showMessage('App instalado com sucesso.', 'ok');
       }
     }
@@ -1486,26 +1480,18 @@
       $('btnAlterarSenha').addEventListener('click', alterarSenha);
       $('btnLimparSenha').addEventListener('click', clearSenhaForm);
 
-      $('btnInstallTop').addEventListener('click', instalarApp);
-      $('btnHowInstallTop').addEventListener('click', showManualInstallBox);
-      $('installHintClose').addEventListener('click', hideInstallHint);
-      $('manualInstallClose').addEventListener('click', hideManualInstallBox);
-      $('manualInstallOk').addEventListener('click', hideManualInstallBox);
-      $('manualInstallBox').addEventListener('click', (e) => {
-        if(e.target.id === 'manualInstallBox') hideManualInstallBox();
-      });
+      $('btnInstallCard').addEventListener('click', instalarApp);
+      $('btnCloseInstallCard').addEventListener('click', () => hideInstallCard(true));
 
       window.addEventListener('beforeinstallprompt', (event) => {
         event.preventDefault();
         deferredPrompt = event;
-        showInstallButton();
+        showInstallCard();
       });
 
       window.addEventListener('appinstalled', () => {
         deferredPrompt = null;
-        hideInstallButton();
-        hideInstallHint();
-        hideManualInstallBox();
+        hideInstallCard(true);
       });
     }
 
@@ -1519,9 +1505,8 @@
       await loadDocumentos(false);
       if(userSession) await reloadSessionFromDb();
 
-      const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-      if(isIOS && !isStandaloneMode()){
-        setTimeout(showInstallHint, 2500);
+      if(isStandaloneMode()){
+        hideInstallCard(true);
       }
 
       if('serviceWorker' in navigator){
