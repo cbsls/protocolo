@@ -1,7 +1,7 @@
 {
   "name": "📄 Protocolo SSCI • CB SLS",
   "short_name": "Protocolo SSCI",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui"],
