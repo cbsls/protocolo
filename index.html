@@ -281,6 +281,48 @@
       animation:installPulse 1.8s infinite;
     }
     #installBtn.show{display:inline-flex}
+    #manualInstallBox{
+      position:fixed;
+      inset:0;
+      z-index:90;
+      background:rgba(0,0,0,.38);
+      display:none;
+      align-items:flex-end;
+      justify-content:center;
+      padding:14px;
+    }
+    #manualInstallBox.show{display:flex}
+    #manualInstallCard{
+      width:min(520px,100%);
+      background:#fffdf9;
+      border:1px solid var(--line);
+      border-radius:22px;
+      box-shadow:0 18px 40px rgba(0,0,0,.25);
+      padding:16px;
+    }
+    #manualInstallCard h3{
+      margin:0 0 8px;
+      font-size:18px;
+    }
+    #manualInstallCard p{
+      margin:0 0 10px;
+      color:#333;
+      line-height:1.5;
+      font-size:14px;
+    }
+    #manualInstallCard ol{
+      margin:0 0 12px 18px;
+      padding:0;
+      color:#333;
+      line-height:1.6;
+      font-size:14px;
+    }
+    #manualInstallActions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:8px;
+    }
     #installBtn:hover{transform:translateY(-1px)}
     #installHint{
       position:fixed;
@@ -334,6 +376,22 @@
     <button id="installHintClose" type="button">×</button>
     <strong>📱 Instalar como app</strong><br>
     No iPhone/iPad, toque em <strong>Compartilhar</strong> e depois em <strong>Adicionar à Tela de Início</strong>.
+  </div>
+
+  <div id="manualInstallBox">
+    <div id="manualInstallCard">
+      <h3>📲 Instalar como app</h3>
+      <p id="manualInstallText">Se o Chrome não abrir a instalação automática, use a opção manual do navegador.</p>
+      <ol id="manualInstallSteps">
+        <li>Toque no menu <strong>⋮</strong> do Chrome.</li>
+        <li>Toque em <strong>Adicionar à tela inicial</strong> ou <strong>Instalar app</strong>.</li>
+        <li>Depois abra pelo ícone criado na tela inicial.</li>
+      </ol>
+      <div id="manualInstallActions">
+        <button id="manualInstallClose" type="button" class="btn-ghost">Fechar</button>
+        <button id="manualInstallOk" type="button" class="btn-primary">Entendi</button>
+      </div>
+    </div>
   </div>
 
   <div class="app">
@@ -1361,15 +1419,38 @@
       clearTimeout(installHintTimer);
     }
 
-    async function instalarApp(){
-      if(!deferredPrompt) return;
-      deferredPrompt.prompt();
-      const choice = await deferredPrompt.userChoice;
-      deferredPrompt = null;
-      hideInstallButton();
-      if(choice && choice.outcome === 'accepted'){
-        showMessage('App instalado com sucesso.', 'ok');
+    function showManualInstallBox(){
+      if(isStandaloneMode()) return;
+      const ua = navigator.userAgent.toLowerCase();
+      const isIOS = /iphone|ipad|ipod/.test(ua);
+      const text = $('manualInstallText');
+      const steps = $('manualInstallSteps');
+      if(isIOS){
+        text.textContent = 'No iPhone/iPad a instalação é manual pelo menu de compartilhamento.';
+        steps.innerHTML = '<li>Toque em <strong>Compartilhar</strong> no Safari.</li><li>Toque em <strong>Adicionar à Tela de Início</strong>.</li><li>Abra pelo ícone criado na tela inicial.</li>';
+      } else {
+        text.textContent = 'Se o Chrome não abrir a instalação automática, use a opção manual do navegador.';
+        steps.innerHTML = '<li>Toque no menu <strong>⋮</strong> do Chrome.</li><li>Toque em <strong>Adicionar à tela inicial</strong> ou <strong>Instalar app</strong>.</li><li>Depois abra pelo ícone criado na tela inicial.</li>';
       }
+      $('manualInstallBox').classList.add('show');
+    }
+
+    function hideManualInstallBox(){
+      $('manualInstallBox').classList.remove('show');
+    }
+
+    async function instalarApp(){
+      if(deferredPrompt){
+        deferredPrompt.prompt();
+        const choice = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        hideInstallButton();
+        if(choice && choice.outcome === 'accepted'){
+          showMessage('App instalado com sucesso.', 'ok');
+          return;
+        }
+      }
+      showManualInstallBox();
     }
 
 
@@ -1421,6 +1502,11 @@
 
       $('installBtn').addEventListener('click', instalarApp);
       $('installHintClose').addEventListener('click', hideInstallHint);
+      $('manualInstallClose').addEventListener('click', hideManualInstallBox);
+      $('manualInstallOk').addEventListener('click', hideManualInstallBox);
+      $('manualInstallBox').addEventListener('click', (e) => {
+        if(e.target.id === 'manualInstallBox') hideManualInstallBox();
+      });
 
       window.addEventListener('beforeinstallprompt', (event) => {
         event.preventDefault();
@@ -1446,6 +1532,10 @@
       if(userSession) await reloadSessionFromDb();
 
       const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+      const isAndroid = /android/i.test(navigator.userAgent);
+      if(!isStandaloneMode() && (isIOS || isAndroid)){
+        setTimeout(showInstallButton, 1200);
+      }
       if(isIOS && !isStandaloneMode()){
         setTimeout(showInstallHint, 2500);
       }
