@@ -5,15 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>📄 Protocolo SSCI • CB SLS</title>
   <meta name="theme-color" content="#c9b18a" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="Protocolo SSCI" />
-  <meta name="application-name" content="Protocolo SSCI" />
-  <meta name="description" content="Protocolo SSCI • CB SLS" />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icon.png" />
   <link rel="apple-touch-icon" href="icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Protocolo SSCI" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     *{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;-webkit-tap-highlight-color:transparent}
@@ -35,11 +32,8 @@
       --warnbg:#fff4d7;
       --done:#265d8f;
       --donebg:#e9f3fb;
-      --danger:#9b3b3b;
       --shadow:0 2px 10px rgba(0,0,0,.08);
       --radius:18px;
-      --install:#25D366;
-      --install-dark:#128C7E;
     }
     html{scroll-behavior:smooth}
     body{
@@ -52,7 +46,7 @@
       max-width:980px;
       margin:0 auto;
       min-height:100vh;
-      padding:0 0 120px;
+      padding:0 0 98px;
     }
     .topbar{
       position:sticky;
@@ -62,41 +56,113 @@
       box-shadow:0 2px 10px rgba(0,0,0,.12);
     }
     .topbar-inner{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center; /* centraliza vertical */
+  gap:8px;
+  padding:10px 12px;
+}
+    .brand{
+      display:flex;align-items:center;gap:10px;min-width:0;flex:1;
     }
-    .brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
     .logo{
-      width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
-      background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.7);font-size:20px;flex-shrink:0;
-    }
-    .brand-title{font-size:1rem;font-weight:700;line-height:1.15}
-    .brand-sub{font-size:11px;color:#1d1d1d;opacity:.9;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .head-actions{display:flex;align-items:center;gap:6px;justify-content:flex-end}
-    .pill{
-      display:inline-flex;align-items:center;justify-content:center;min-height:26px;padding:4px 8px;border-radius:999px;
-      font-size:10px;font-weight:700;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.75);color:#111;white-space:nowrap;
-    }
+      width:42px;height:42px;border-radius:50%;
+      display:grid;place-items:center;
+      background:rgba(255,255,255,.45);
+      border:1px solid rgba(255,255,255,.7);
+      font-size:20px;flex-shrink:0;
+   }
+.brand-title{
+  font-size:1rem;
+  font-weight:700;
+  line-height:1.15;
+}
+
+.brand-sub{
+  font-size:11px;
+  color:#1d1d1d;
+  opacity:.9;
+  margin-top:3px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.head-actions{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  justify-content:flex-end;
+}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:26px;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:700;
+  background:rgba(255,255,255,.55);
+  border:1px solid rgba(255,255,255,.75);
+  color:#111;
+  white-space:nowrap;
+}
     .btn-mini{
-      border:0;border-radius:999px;padding:4px 8px;min-height:26px;font-size:10px;font-weight:600;cursor:pointer;background:rgba(255,255,255,.58);color:#111;
-    }
+  border:0;
+  border-radius:999px;
+  padding:4px 8px;
+  min-height:26px;
+  font-size:10px;
+  font-weight:600;
+  cursor:pointer;
+  background:rgba(255,255,255,.58);
+  color:#111;
+}
     .btn-mini.sec{background:rgba(0,0,0,.08)}
     .screen{display:none;padding:12px}
     .screen.active{display:block}
     .card{
-      background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:12px;box-shadow:var(--shadow);
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:14px;
+      margin-bottom:12px;
+      box-shadow:var(--shadow);
     }
     .card h2,.card h3{margin:0 0 8px}
     .sub{font-size:12px;color:var(--muted);line-height:1.45;margin-bottom:12px}
-    .info-box{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--card2);font-size:13px;line-height:1.5;color:#222}
-    label{display:block;margin:10px 0 6px;font-size:12px;font-weight:700;color:#222}
-    input,select,textarea,button{
-      width:100%;border-radius:12px;border:1px solid var(--line);background:#fff;padding:11px 12px;font-size:14px;outline:none;color:#111;
+    .info-box{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      background:var(--card2);
+      font-size:13px;
+      line-height:1.5;
+      color:#222;
     }
-    input:focus,select:focus,textarea:focus{border-color:#b5925d;box-shadow:0 0 0 3px rgba(181,146,93,.12)}
+    label{
+      display:block;
+      margin:10px 0 6px;
+      font-size:12px;
+      font-weight:700;
+      color:#222;
+    }
+    input,select,textarea,button{
+      width:100%;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#fff;
+      padding:11px 12px;
+      font-size:14px;
+      outline:none;
+      color:#111;
+    }
+    input:focus,select:focus,textarea:focus{
+      border-color:#b5925d;
+      box-shadow:0 0 0 3px rgba(181,146,93,.12);
+    }
     input[readonly],textarea[readonly]{background:#f7f2ea;color:#4c4c4c}
     textarea{min-height:110px;resize:vertical}
     button{border:0;cursor:pointer;font-weight:700}
@@ -104,24 +170,52 @@
     .btn-primary{background:var(--primary);color:#fff}
     .btn-secondary{background:#6d6255;color:#fff}
     .btn-ghost{background:#eee3d3;color:#222}
-    .btn-danger{background:var(--danger);color:#fff}
+    .btn-danger{background:#9b3b3b;color:#fff}
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
     .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-    .msg{margin:12px;padding:12px 14px;border-radius:14px;display:none;font-weight:700;font-size:14px;box-shadow:var(--shadow)}
+    .msg{
+      margin:12px;
+      padding:12px 14px;
+      border-radius:14px;
+      display:none;
+      font-weight:700;
+      font-size:14px;
+      box-shadow:var(--shadow);
+    }
     .msg.ok{display:block;background:var(--successbg);color:var(--success);border:1px solid #c7dcc9}
     .msg.erro{display:block;background:#faecec;color:#8c2d2d;border:1px solid #e6c8c8}
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-    .stat{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:12px 10px;text-align:center;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .stat{
+      background:var(--card2);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px 10px;
+      text-align:center;
+      cursor:pointer;
+      transition:transform .15s ease,box-shadow .15s ease;
+    }
     .stat:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.08)}
     .stat .num{font-size:22px;font-weight:700;color:var(--primary);line-height:1;margin-bottom:4px}
     .stat .lab{font-size:11px;color:var(--muted);font-weight:700}
-    .search-pill{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:10px 12px;box-shadow:var(--shadow);margin-bottom:10px}
+    .search-pill{
+      display:flex;align-items:center;gap:8px;
+      background:#fff;border:1px solid var(--line);border-radius:999px;
+      padding:10px 12px;box-shadow:var(--shadow);margin-bottom:10px
+    }
     .search-pill input{border:0;padding:0;background:transparent;box-shadow:none}
     .toolbar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    .check{display:flex;align-items:center;gap:8px;padding:12px;border:1px solid var(--line);background:#fff;border-radius:12px;font-weight:700;font-size:13px;color:#333}
+    .check{
+      display:flex;align-items:center;gap:8px;padding:12px;
+      border:1px solid var(--line);background:#fff;border-radius:12px;
+      font-weight:700;font-size:13px;color:#333;
+    }
     .check input{width:auto;margin:0}
-    .badge{display:inline-flex;align-items:center;justify-content:center;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:700;background:#efe4d4;color:#222;border:1px solid #e3d8c8;white-space:nowrap}
+    .badge{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:6px 10px;border-radius:999px;font-size:11px;font-weight:700;
+      background:#efe4d4;color:#222;border:1px solid #e3d8c8;white-space:nowrap;
+    }
     .mini-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
     .st-pendente{background:var(--warnbg);color:var(--warn)}
     .st-encaminhado{background:#efe7ff;color:#5f3d9b}
@@ -129,42 +223,100 @@
     .pr-baixa{background:#f1ece3;color:#555}
     .pr-media{background:#fff4d7;color:#8a6216}
     .pr-alta{background:#fde8e8;color:#9a2f2f}
-    .ticket{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;box-shadow:var(--shadow);margin-bottom:12px}
+    .ticket{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      box-shadow:var(--shadow);
+      margin-bottom:12px;
+    }
     .ticket.high{background:#fff8f6}
     .ticket.done{background:#f7fbff}
     .ticket-title{font-size:15px;font-weight:700;color:#111;margin-bottom:4px}
     .ticket-sub{font-size:14px;line-height:1.55;color:#222;white-space:pre-wrap}
     .meta{display:grid;gap:6px;font-size:12px;color:#2c2c2c;margin-top:10px}
-    .block{margin-top:10px;padding:10px;border-radius:12px;border:1px solid var(--line);background:#faf5ec;font-size:12px;line-height:1.5;white-space:pre-wrap;color:#222}
-    .timer{margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:#f8f2e8;font-size:12px;color:#514026}
+    .block{
+      margin-top:10px;padding:10px;border-radius:12px;border:1px solid var(--line);
+      background:#faf5ec;font-size:12px;line-height:1.5;white-space:pre-wrap;color:#222;
+    }
+    .timer{
+      margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);
+      background:#f8f2e8;font-size:12px;color:#514026;
+    }
     .home-list{display:grid;gap:10px}
-    .home-item{border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px;box-shadow:var(--shadow)}
+    .home-item{
+      border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px;box-shadow:var(--shadow);
+    }
     .tabbar{
-      position:fixed;left:50%;transform:translateX(-50%);bottom:10px;z-index:30;width:min(980px,calc(100% - 14px));background:rgba(255,253,249,.97);
-      border:1px solid var(--line);border-radius:22px;box-shadow:0 10px 24px rgba(0,0,0,.14);padding:8px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;backdrop-filter:blur(14px)
+      position:fixed;left:50%;transform:translateX(-50%);bottom:10px;z-index:30;
+      width:min(980px,calc(100% - 14px));background:rgba(255,253,249,.97);
+      border:1px solid var(--line);border-radius:22px;box-shadow:0 10px 24px rgba(0,0,0,.14);
+      padding:8px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;
+      backdrop-filter:blur(14px)
     }
-    .tabbar button{background:transparent;color:#4f4f4f;padding:10px 6px;border-radius:14px;font-size:12px;border:none}
+    .tabbar button{
+      background:transparent;color:#4f4f4f;padding:10px 6px;border-radius:14px;font-size:12px;border:none
+    }
     .tabbar button.active{background:#eee2d0;color:#392b18;font-weight:700}
-    .install-fab{
-      position:fixed;right:16px;bottom:96px;z-index:40;display:none;align-items:center;gap:10px;max-width:calc(100vw - 32px);
-      background:linear-gradient(135deg,var(--install),var(--install-dark));color:#fff;border:none;border-radius:999px;
-      padding:12px 16px;box-shadow:0 12px 28px rgba(0,0,0,.22);font-weight:700;font-size:14px;
+
+    #installBtn{
+      position:fixed;
+      right:14px;
+      bottom:88px;
+      z-index:60;
+      width:auto;
+      min-width:unset;
+      padding:12px 16px;
+      border:none;
+      border-radius:999px;
+      background:#075E54;
+      color:#fff;
+      font-size:14px;
+      font-weight:700;
+      box-shadow:0 8px 22px rgba(0,0,0,.22);
+      display:none;
+      align-items:center;
+      gap:8px;
+      animation:installPulse 1.8s infinite;
     }
-    .install-fab.show{display:inline-flex}
-    .install-fab .icon{
-      width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18);font-size:18px;flex-shrink:0;
+    #installBtn.show{display:inline-flex}
+    #installBtn:hover{transform:translateY(-1px)}
+    #installHint{
+      position:fixed;
+      right:14px;
+      bottom:150px;
+      z-index:60;
+      max-width:280px;
+      padding:11px 12px;
+      border-radius:14px;
+      background:#fffdf9;
+      border:1px solid var(--line);
+      box-shadow:0 8px 22px rgba(0,0,0,.14);
+      font-size:12px;
+      line-height:1.45;
+      color:#222;
+      display:none;
     }
-    .install-fab .txt{display:flex;flex-direction:column;align-items:flex-start;line-height:1.1}
-    .install-fab .txt small{font-size:11px;font-weight:600;opacity:.92}
-    .install-card{
-      position:fixed;left:12px;right:12px;bottom:96px;z-index:39;display:none;background:#fffdf9;border:1px solid var(--line);border-radius:18px;
-      box-shadow:0 14px 28px rgba(0,0,0,.16);padding:14px;
+    #installHint.show{display:block}
+    #installHintClose{
+      float:right;
+      border:none;
+      background:transparent;
+      width:auto;
+      min-width:unset;
+      padding:0 0 0 8px;
+      color:#6a6a6a;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
     }
-    .install-card.show{display:block}
-    .install-card h3{margin:0 0 6px;font-size:15px}
-    .install-card p{margin:0;color:#444;font-size:13px;line-height:1.5}
-    .install-card .row{display:flex;gap:10px;margin-top:12px}
-    .install-card .row button{padding:10px 12px}
+    @keyframes installPulse{
+      0%{transform:scale(1)}
+      50%{transform:scale(1.03)}
+      100%{transform:scale(1)}
+    }
+
     .hidden{display:none!important}
     @media (max-width:780px){
       .app{max-width:560px}
@@ -172,11 +324,18 @@
       .brand-title{font-size:.95rem}
       .brand-sub{white-space:normal}
       .grid-2,.grid-3,.actions,.toolbar,.stats{grid-template-columns:1fr}
-      .install-fab{right:12px;left:12px;bottom:92px;justify-content:center}
     }
   </style>
 </head>
 <body>
+
+  <button id="installBtn" type="button">📲 Instalar app</button>
+  <div id="installHint">
+    <button id="installHintClose" type="button">×</button>
+    <strong>📱 Instalar como app</strong><br>
+    No iPhone/iPad, toque em <strong>Compartilhar</strong> e depois em <strong>Adicionar à Tela de Início</strong>.
+  </div>
+
   <div class="app">
     <div class="topbar">
       <div class="topbar-inner">
@@ -184,14 +343,16 @@
           <div class="logo">📄</div>
           <div>
             <div class="brand-title">PROTOCOLO SSCI</div>
-            <div class="brand-sub">Entrada de documentos</div>
+            <div class="brand-sub">
+              Entrada de documentos
+              </div>
           </div>
         </div>
         <div class="head-actions">
           <div id="pillUser" class="pill">👤 Sem login</div>
           <div id="pillAdmin" class="pill hidden">🛡️ Admin</div>
           <button id="btnGoLogin" class="btn-mini" type="button">🔐 Entrar</button>
-          <button id="btnLogout" class="btn-mini sec hidden" type="button">🚪</button>
+          <button id="btnLogout" class="btn-mini sec">🚪</button>
         </div>
       </div>
     </div>
@@ -298,7 +459,7 @@
           </div>
           <div id="tipoOutroWrap" class="hidden">
             <label for="tipoDocumentoOutro">Outro tipo</label>
-            <input id="tipoDocumentoOutro" placeholder="Digite o tipo" disabled />
+            <input id="tipoDocumentoOutro" placeholder="Digite o tipo" />
           </div>
         </div>
 
@@ -470,23 +631,6 @@
     </section>
   </div>
 
-  <button id="installFab" class="install-fab hidden" type="button" aria-label="Instalar aplicativo">
-    <span class="icon">📲</span>
-    <span class="txt">
-      <span>Instalar app</span>
-      <small>Toque para adicionar à tela inicial</small>
-    </span>
-  </button>
-
-  <div id="installCard" class="install-card hidden">
-    <h3>📲 Instale o app</h3>
-    <p id="installCardText">Adicione o Protocolo SSCI na tela inicial para abrir como aplicativo.</p>
-    <div class="row">
-      <button id="btnInstallNow" class="btn-primary" type="button">Instalar agora</button>
-      <button id="btnInstallClose" class="btn-ghost" type="button">Agora não</button>
-    </div>
-  </div>
-
   <nav class="tabbar">
     <button data-screen="home" class="active">🏠<br>Início</button>
     <button data-screen="novo">➕<br>Novo</button>
@@ -498,9 +642,7 @@
   <script>
     const SUPABASE_URL = 'https://azltlpjyyqecurmebffm.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_ODDfIVnGOb1csV9DA8kURQ_pbKPeQNO';
-    const sb = window.supabase?.createClient
-      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-      : null;
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const $ = (id) => document.getElementById(id);
 
@@ -508,9 +650,9 @@
     let militares = [];
     let documentos = [];
     let deferredPrompt = null;
-    let installDismissed = false;
+    let installHintTimer = null;
 
-    function showMessage(text, type = 'ok'){
+    function showMessage(text, type='ok'){
       const box = $('mensagem');
       box.className = `msg ${type}`;
       box.textContent = text;
@@ -533,16 +675,14 @@
     }
 
     function digitsOnly(v){
-      return String(v || '').replace(/\D/g, '');
+      return String(v || '').replace(/\D/g,'');
     }
 
     function formatPhone(v){
-      const d = digitsOnly(v).slice(0, 11);
+      const d = digitsOnly(v).slice(0,11);
       if(!d) return '';
       if(d.length <= 2) return `(${d}`;
-      if(d.length <= 7) return `(${d.slice(0,2)}) ${d.slice(2)}`;
-      if(d.length <= 10) return `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
-      return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
+      return `(${d.slice(0,2)}) ${d.slice(2)}`;
     }
 
     function formatDateTimeBR(value){
@@ -574,69 +714,6 @@
       return !!(userSession && userSession.is_admin);
     }
 
-    function isStandalone(){
-      return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-    }
-
-    function isIOS(){
-      return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
-    }
-
-    function hideInstallUi(){
-      $('installFab').classList.remove('show');
-      $('installFab').classList.add('hidden');
-      $('installCard').classList.remove('show');
-      $('installCard').classList.add('hidden');
-    }
-
-    function showInstallUi(mode = 'fab'){
-      if(installDismissed || isStandalone()){
-        hideInstallUi();
-        return;
-      }
-
-      if(mode === 'card'){
-        $('installCard').classList.remove('hidden');
-        $('installCard').classList.add('show');
-        $('installFab').classList.remove('show');
-        $('installFab').classList.add('hidden');
-      } else {
-        $('installFab').classList.remove('hidden');
-        $('installFab').classList.add('show');
-        $('installCard').classList.remove('show');
-        $('installCard').classList.add('hidden');
-      }
-    }
-
-    function configureInstallText(){
-      if(isIOS() && !deferredPrompt && !isStandalone()){
-        $('installCardText').innerHTML = 'No iPhone/iPad, abra o menu de compartilhamento do navegador e toque em <strong>Adicionar à Tela de Início</strong>.';
-      } else {
-        $('installCardText').textContent = 'Adicione o Protocolo SSCI na tela inicial para abrir como aplicativo.';
-      }
-    }
-
-    async function triggerInstall(){
-      if(isStandalone()){
-        hideInstallUi();
-        return;
-      }
-
-      if(deferredPrompt){
-        deferredPrompt.prompt();
-        const result = await deferredPrompt.userChoice;
-        if(result?.outcome === 'accepted'){
-          showMessage('App adicionado à tela inicial.', 'ok');
-          hideInstallUi();
-        }
-        deferredPrompt = null;
-        return;
-      }
-
-      configureInstallText();
-      showInstallUi('card');
-    }
-
     function saveSession(){
       if(userSession){
         localStorage.setItem('protocolo_ssci_session', JSON.stringify(userSession));
@@ -649,7 +726,7 @@
       try{
         const raw = localStorage.getItem('protocolo_ssci_session');
         if(raw) userSession = JSON.parse(raw);
-      } catch {
+      }catch(e){
         userSession = null;
       }
     }
@@ -684,8 +761,8 @@
         $('respostaStatusBox').textContent = 'Faça login com um militar admin para usar esta aba.';
         $('respostaAssinatura').value = '';
       }
-
       $('respostaDataHora').value = nowBR();
+
       toggleNovoAccess();
       toggleRespostaAccess();
     }
@@ -695,19 +772,13 @@
       [
         'nomeSolicitante','telefoneSolicitante','ppciSolicitante','tipoDocumento','tipoDocumentoOutro',
         'numeroDocumento','prioridade','outrasInformacoes','aosCuidadosDe','btnRegistrarDocumento','btnLimparNovo'
-      ].forEach(id => {
-        const el = $(id);
-        if(el) el.disabled = !enabled;
-      });
+      ].forEach(id => $(id).disabled = !enabled);
     }
 
     function toggleRespostaAccess(){
       const enabled = isAdmin();
       ['docRespostaSelect','respostaSsci','respostaNovoStatus','respostaObs','btnSalvarResposta','btnLimparResposta']
-        .forEach(id => {
-          const el = $(id);
-          if(el) el.disabled = !enabled;
-        });
+        .forEach(id => $(id).disabled = !enabled);
     }
 
     function clearNovoForm(){
@@ -717,7 +788,6 @@
       $('tipoDocumento').value = '';
       $('tipoDocumentoOutro').value = '';
       $('tipoOutroWrap').classList.add('hidden');
-      $('tipoDocumentoOutro').disabled = true;
       $('numeroDocumento').value = '';
       $('prioridade').value = 'Média';
       $('outrasInformacoes').value = '';
@@ -725,7 +795,7 @@
       $('protocoloDataHora').value = nowBR();
     }
 
-    function clearRespostaForm(keepDoc = true){
+    function clearRespostaForm(keepDoc=true){
       if(!keepDoc) $('docRespostaSelect').selectedIndex = 0;
       $('respostaSsci').value = '';
       $('respostaNovoStatus').value = 'Encaminhado';
@@ -741,16 +811,11 @@
     }
 
     async function loadMilitares(){
-      if(!sb){
-        showMessage('Supabase não carregou corretamente.', 'erro');
-        return;
-      }
-
       const { data, error } = await sb
         .from('militares_ssci')
         .select('*')
         .eq('ativo', true)
-        .order('nome_guerra', { ascending: true });
+        .order('nome_guerra', { ascending:true });
 
       if(error){
         console.error(error);
@@ -806,7 +871,6 @@
         nome_completo: data.nome_completo,
         is_admin: !!data.is_admin
       };
-
       saveSession();
       updateTop();
       $('loginIdFunc').value = '';
@@ -832,7 +896,6 @@
         nome_completo: data.nome_completo,
         is_admin: !!data.is_admin
       };
-
       saveSession();
       updateTop();
     }
@@ -930,7 +993,7 @@
         return;
       }
       if(tipoDocumento === 'OUTROS' && !tipoDocumentoOutro){
-        showMessage('Digite o tipo em “Outros”.', 'erro');
+        showMessage('Digite o tipo em "Outros".', 'erro');
         return;
       }
       if(!numeroDocumento){
@@ -942,7 +1005,7 @@
         return;
       }
       if(!aosCuidadosDe){
-        showMessage('Selecione “Aos Cuidados de”.', 'erro');
+        showMessage('Selecione "Aos Cuidados de".', 'erro');
         return;
       }
 
@@ -955,7 +1018,7 @@
           tipo_documento: tipoDocumento,
           tipo_documento_outro: tipoDocumento === 'OUTROS' ? tipoDocumentoOutro : null,
           numero_documento: numeroDocumento,
-          prioridade,
+          prioridade: prioridade,
           outras_informacoes: outrasInformacoes,
           aos_cuidados_de: aosCuidadosDe,
           status: 'Pendente',
@@ -976,11 +1039,11 @@
       trocarTela('documentos');
     }
 
-    async function loadDocumentos(showToast = false){
+    async function loadDocumentos(showToast=false){
       const { data, error } = await sb
         .from('documentos_ssci')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending:false });
 
       if(error){
         console.error(error);
@@ -1007,28 +1070,25 @@
     }
 
     function renderFiltroTipo(){
-      const tipoAtual = $('filtroTipo').value;
       const tipos = [...new Set(documentos.map(d => getTipoDocumentoFinal(d)).filter(Boolean))]
-        .sort((a, b) => a.localeCompare(b, 'pt-BR'));
+        .sort((a,b) => a.localeCompare(b,'pt-BR'));
       $('filtroTipo').innerHTML =
         '<option value="">Todos os tipos</option>' +
         tipos.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');
-      $('filtroTipo').value = tipos.includes(tipoAtual) ? tipoAtual : '';
     }
 
     function renderFiltroResponsavel(){
-      const atual = $('filtroResponsavel').value;
       const resp = [...new Set(documentos.map(d => d.aos_cuidados_de).filter(Boolean))]
-        .sort((a, b) => a.localeCompare(b, 'pt-BR'));
+        .sort((a,b) => a.localeCompare(b,'pt-BR'));
       $('filtroResponsavel').innerHTML =
         '<option value="">Todos os responsáveis</option>' +
         resp.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');
-      $('filtroResponsavel').value = resp.includes(atual) ? atual : '';
     }
 
     function tempoDocumento(doc){
       const ini = doc.created_at ? new Date(doc.created_at).getTime() : Date.now();
-      const totalSeconds = Math.max(0, Math.floor((Date.now() - ini) / 1000));
+      const fim = Date.now();
+      const totalSeconds = Math.max(0, Math.floor((fim - ini) / 1000));
       const dias = Math.floor(totalSeconds / 86400);
       const horas = Math.floor((totalSeconds % 86400) / 3600);
       const minutos = Math.floor((totalSeconds % 3600) / 60);
@@ -1042,11 +1102,11 @@
     function renderHome(){
       const abertos = documentos
         .filter(d => d.status !== 'Concluído')
-        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+        .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
         .slice(0, 8);
 
       if(!abertos.length){
-        $('homeList').innerHTML = '<div class="home-item">Nenhum documento em andamento no momento.</div>';
+        $('homeList').innerHTML = `<div class="home-item">Nenhum documento em andamento no momento.</div>`;
         return;
       }
 
@@ -1067,11 +1127,58 @@
       `).join('');
     }
 
+    function renderLista(){
+      const busca = $('busca').value.trim().toLowerCase();
+      const filtroStatus = $('filtroStatus').value;
+      const filtroTipo = $('filtroTipo').value;
+      const filtroResponsavel = $('filtroResponsavel').value;
+      const somenteComResposta = $('somenteComResposta').checked;
+
+      const filtrados = documentos.filter(doc => {
+        const pool = [
+          doc.nome_solicitante, doc.telefone_solicitante, doc.ppci,
+          doc.tipo_documento, doc.tipo_documento_outro, doc.numero_documento,
+          doc.outras_informacoes, doc.aos_cuidados_de, doc.status,
+          doc.protocolista_nome_guerra, doc.resposta_ssci, doc.observacao_admin
+        ].join(' ').toLowerCase();
+
+        return (
+          (!busca || pool.includes(busca)) &&
+          (!filtroStatus || doc.status === filtroStatus) &&
+          (!filtroTipo || getTipoDocumentoFinal(doc) === filtroTipo) &&
+          (!filtroResponsavel || doc.aos_cuidados_de === filtroResponsavel) &&
+          (!somenteComResposta || !!doc.resposta_ssci)
+        );
+      });
+
+      if(!filtrados.length){
+        $('lista').innerHTML = `<div class="card">Nenhum documento encontrado com os filtros atuais.</div>`;
+        return;
+      }
+
+      const ativos = filtrados.filter(d => d.status !== 'Concluído');
+      const concluidos = filtrados.filter(d => d.status === 'Concluído');
+
+      let html = '';
+
+      ativos.forEach(doc => {
+        html += buildTicket(doc);
+      });
+
+      if(concluidos.length){
+        html += `<div class="card"><strong>✅ Concluídos</strong></div>`;
+        concluidos.forEach(doc => html += buildTicket(doc));
+      }
+
+      $('lista').innerHTML = html;
+    }
+
     function buildTicket(doc){
       const tipo = getTipoDocumentoFinal(doc);
       const respostaBlock = doc.resposta_ssci ? `
         <div class="block"><strong>RESPOSTA SSCI</strong><br>${escapeHtml(doc.resposta_ssci)}<br><br><strong>Assinatura:</strong> ${escapeHtml(doc.resposta_assinatura_nome_guerra || '-')}<br><strong>Data/hora:</strong> ${escapeHtml(formatDateTimeBR(doc.resposta_em))}</div>
       ` : '';
+
       const obsBlock = doc.observacao_admin ? `
         <div class="block"><strong>Observação admin</strong><br>${escapeHtml(doc.observacao_admin)}</div>
       ` : '';
@@ -1107,63 +1214,21 @@
       `;
     }
 
-    function renderLista(){
-      const busca = $('busca').value.trim().toLowerCase();
-      const filtroStatus = $('filtroStatus').value;
-      const filtroTipo = $('filtroTipo').value;
-      const filtroResponsavel = $('filtroResponsavel').value;
-      const somenteComResposta = $('somenteComResposta').checked;
-
-      const filtrados = documentos.filter(doc => {
-        const pool = [
-          doc.nome_solicitante, doc.telefone_solicitante, doc.ppci, doc.tipo_documento,
-          doc.tipo_documento_outro, doc.numero_documento, doc.outras_informacoes,
-          doc.aos_cuidados_de, doc.status, doc.protocolista_nome_guerra,
-          doc.resposta_ssci, doc.observacao_admin
-        ].join(' ').toLowerCase();
-
-        return (
-          (!busca || pool.includes(busca)) &&
-          (!filtroStatus || doc.status === filtroStatus) &&
-          (!filtroTipo || getTipoDocumentoFinal(doc) === filtroTipo) &&
-          (!filtroResponsavel || doc.aos_cuidados_de === filtroResponsavel) &&
-          (!somenteComResposta || !!doc.resposta_ssci)
-        );
-      });
-
-      if(!filtrados.length){
-        $('lista').innerHTML = '<div class="card">Nenhum documento encontrado com os filtros atuais.</div>';
-        return;
-      }
-
-      const ativos = filtrados.filter(d => d.status !== 'Concluído');
-      const concluidos = filtrados.filter(d => d.status === 'Concluído');
-      let html = '';
-
-      ativos.forEach(doc => { html += buildTicket(doc); });
-      if(concluidos.length){
-        html += '<div class="card"><strong>✅ Concluídos</strong></div>';
-        concluidos.forEach(doc => { html += buildTicket(doc); });
-      }
-
-      $('lista').innerHTML = html;
-    }
-
     function renderSelectResposta(){
-      const currentValue = $('docRespostaSelect').value;
       const abertos = documentos.filter(doc => doc.status !== 'Concluído');
+
       $('docRespostaSelect').innerHTML =
         '<option value="">Selecione</option>' +
         abertos.map(doc => {
           const tipo = getTipoDocumentoFinal(doc);
           return `<option value="${escapeHtml(doc.id)}">${escapeHtml(tipo)} • ${escapeHtml(doc.numero_documento || 'S/N')} • ${escapeHtml(doc.nome_solicitante || 'Sem solicitante')}</option>`;
         }).join('');
-      $('docRespostaSelect').value = abertos.some(d => String(d.id) === String(currentValue)) ? currentValue : '';
     }
 
     function fillResumoResposta(){
       const id = $('docRespostaSelect').value;
       const doc = documentos.find(d => String(d.id) === String(id));
+
       $('respostaDataHora').value = nowBR();
 
       if(!doc){
@@ -1237,11 +1302,9 @@
 
     function trocarTela(nome){
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      const alvo = document.getElementById('screen-' + nome);
-      if(alvo) alvo.classList.add('active');
+      document.getElementById('screen-' + nome).classList.add('active');
       document.querySelectorAll('.tabbar button').forEach(b => b.classList.remove('active'));
-      const botao = document.querySelector(`.tabbar button[data-screen="${nome}"]`);
-      if(botao) botao.classList.add('active');
+      document.querySelector(`.tabbar button[data-screen="${nome}"]`).classList.add('active');
 
       if(nome === 'documentos') renderLista();
       if(nome === 'resposta') fillResumoResposta();
@@ -1257,7 +1320,7 @@
       renderLista();
     }
 
-    function abrirPorStatus(status = ''){
+    function abrirPorStatus(status=''){
       $('filtroStatus').value = status;
       $('filtroTipo').value = '';
       $('filtroResponsavel').value = '';
@@ -1266,6 +1329,49 @@
       trocarTela('documentos');
       renderLista();
     }
+
+
+    function isStandaloneMode(){
+      return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    }
+
+    function showInstallButton(){
+      if(isStandaloneMode()) return;
+      const btn = $('installBtn');
+      if(btn) btn.classList.add('show');
+    }
+
+    function hideInstallButton(){
+      const btn = $('installBtn');
+      if(btn) btn.classList.remove('show');
+    }
+
+    function showInstallHint(){
+      if(isStandaloneMode()) return;
+      const hint = $('installHint');
+      if(!hint) return;
+      hint.classList.add('show');
+      clearTimeout(installHintTimer);
+      installHintTimer = setTimeout(() => hint.classList.remove('show'), 9000);
+    }
+
+    function hideInstallHint(){
+      const hint = $('installHint');
+      if(hint) hint.classList.remove('show');
+      clearTimeout(installHintTimer);
+    }
+
+    async function instalarApp(){
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      hideInstallButton();
+      if(choice && choice.outcome === 'accepted'){
+        showMessage('App instalado com sucesso.', 'ok');
+      }
+    }
+
 
     function bindEvents(){
       document.querySelectorAll('.tabbar button').forEach(btn => {
@@ -1313,37 +1419,25 @@
       $('btnAlterarSenha').addEventListener('click', alterarSenha);
       $('btnLimparSenha').addEventListener('click', clearSenhaForm);
 
-      $('installFab').addEventListener('click', triggerInstall);
-      $('btnInstallNow').addEventListener('click', triggerInstall);
-      $('btnInstallClose').addEventListener('click', () => {
-        installDismissed = true;
-        hideInstallUi();
-      });
+      $('installBtn').addEventListener('click', instalarApp);
+      $('installHintClose').addEventListener('click', hideInstallHint);
 
       window.addEventListener('beforeinstallprompt', (event) => {
         event.preventDefault();
         deferredPrompt = event;
-        configureInstallText();
-        showInstallUi('fab');
+        showInstallButton();
       });
 
       window.addEventListener('appinstalled', () => {
         deferredPrompt = null;
-        hideInstallUi();
-        showMessage('Aplicativo instalado com sucesso.', 'ok');
+        hideInstallButton();
+        hideInstallHint();
       });
     }
 
     async function boot(){
-      if(!sb){
-        showMessage('Erro ao iniciar Supabase no app.', 'erro');
-        return;
-      }
-
       bindEvents();
       loadSession();
-      configureInstallText();
-      if(isIOS() && !isStandalone()) showInstallUi('fab');
       await loadMilitares();
       updateTop();
       clearNovoForm();
@@ -1351,11 +1445,14 @@
       await loadDocumentos(false);
       if(userSession) await reloadSessionFromDb();
 
+      const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+      if(isIOS && !isStandaloneMode()){
+        setTimeout(showInstallHint, 2500);
+      }
+
       if('serviceWorker' in navigator){
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js').catch((err) => {
-            console.error('SW error:', err);
-          });
+          navigator.serviceWorker.register('./sw.js').catch(() => {});
         });
       }
     }
@@ -1363,4 +1460,4 @@
     boot();
   </script>
 </body>
-</html>
+  </html>
