@@ -8,6 +8,7 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icon.png" />
   <link rel="apple-touch-icon" href="icon.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Protocolo SSCI" />
@@ -56,12 +57,12 @@
       box-shadow:0 2px 10px rgba(0,0,0,.12);
     }
     .topbar-inner{
-  display:flex;
-  justify-content:space-between;
-  align-items:center; /* centraliza vertical */
-  gap:8px;
-  padding:10px 12px;
-}
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+    }
     .brand{
       display:flex;align-items:center;gap:10px;min-width:0;flex:1;
     }
@@ -71,56 +72,66 @@
       background:rgba(255,255,255,.45);
       border:1px solid rgba(255,255,255,.7);
       font-size:20px;flex-shrink:0;
-   }
-.brand-title{
-  font-size:1rem;
-  font-weight:700;
-  line-height:1.15;
-}
-
-.brand-sub{
-  font-size:11px;
-  color:#1d1d1d;
-  opacity:.9;
-  margin-top:3px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.head-actions{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  justify-content:flex-end;
-}
-
-.pill{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:26px;
-  padding:4px 8px;
-  border-radius:999px;
-  font-size:10px;
-  font-weight:700;
-  background:rgba(255,255,255,.55);
-  border:1px solid rgba(255,255,255,.75);
-  color:#111;
-  white-space:nowrap;
-}
+    }
+    .brand-title{
+      font-size:1rem;
+      font-weight:700;
+      line-height:1.15;
+    }
+    .brand-sub{
+      font-size:11px;
+      color:#1d1d1d;
+      opacity:.9;
+      margin-top:3px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .head-actions{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:26px;
+      padding:4px 8px;
+      border-radius:999px;
+      font-size:10px;
+      font-weight:700;
+      background:rgba(255,255,255,.55);
+      border:1px solid rgba(255,255,255,.75);
+      color:#111;
+      white-space:nowrap;
+    }
     .btn-mini{
-  border:0;
-  border-radius:999px;
-  padding:4px 8px;
-  min-height:26px;
-  font-size:10px;
-  font-weight:600;
-  cursor:pointer;
-  background:rgba(255,255,255,.58);
-  color:#111;
-}
+      border:0;
+      border-radius:999px;
+      padding:4px 8px;
+      min-height:26px;
+      font-size:10px;
+      font-weight:600;
+      cursor:pointer;
+      background:rgba(255,255,255,.58);
+      color:#111;
+      width:auto;
+    }
     .btn-mini.sec{background:rgba(0,0,0,.08)}
+    #btnInstallTop{
+      display:none;
+      background:#075E54;
+      color:#fff;
+      box-shadow:0 4px 12px rgba(0,0,0,.18);
+    }
+    #btnInstallTop.show{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
     .screen{display:none;padding:12px}
     .screen.active{display:block}
     .card{
@@ -260,27 +271,36 @@
     }
     .tabbar button.active{background:#eee2d0;color:#392b18;font-weight:700}
 
-    #installBtn{
+    #installHint{
       position:fixed;
       right:14px;
-      bottom:88px;
+      top:72px;
       z-index:60;
+      max-width:280px;
+      padding:11px 12px;
+      border-radius:14px;
+      background:#fffdf9;
+      border:1px solid var(--line);
+      box-shadow:0 8px 22px rgba(0,0,0,.14);
+      font-size:12px;
+      line-height:1.45;
+      color:#222;
+      display:none;
+    }
+    #installHint.show{display:block}
+    #installHintClose{
+      float:right;
+      border:none;
+      background:transparent;
       width:auto;
       min-width:unset;
-      padding:12px 16px;
-      border:none;
-      border-radius:999px;
-      background:#075E54;
-      color:#fff;
-      font-size:14px;
+      padding:0 0 0 8px;
+      color:#6a6a6a;
+      font-size:16px;
       font-weight:700;
-      box-shadow:0 8px 22px rgba(0,0,0,.22);
-      display:none;
-      align-items:center;
-      gap:8px;
-      animation:installPulse 1.8s infinite;
+      cursor:pointer;
     }
-    #installBtn.show{display:inline-flex}
+
     #manualInstallBox{
       position:fixed;
       inset:0;
@@ -323,41 +343,6 @@
       gap:10px;
       margin-top:8px;
     }
-    #installBtn:hover{transform:translateY(-1px)}
-    #installHint{
-      position:fixed;
-      right:14px;
-      bottom:150px;
-      z-index:60;
-      max-width:280px;
-      padding:11px 12px;
-      border-radius:14px;
-      background:#fffdf9;
-      border:1px solid var(--line);
-      box-shadow:0 8px 22px rgba(0,0,0,.14);
-      font-size:12px;
-      line-height:1.45;
-      color:#222;
-      display:none;
-    }
-    #installHint.show{display:block}
-    #installHintClose{
-      float:right;
-      border:none;
-      background:transparent;
-      width:auto;
-      min-width:unset;
-      padding:0 0 0 8px;
-      color:#6a6a6a;
-      font-size:16px;
-      font-weight:700;
-      cursor:pointer;
-    }
-    @keyframes installPulse{
-      0%{transform:scale(1)}
-      50%{transform:scale(1.03)}
-      100%{transform:scale(1)}
-    }
 
     .hidden{display:none!important}
     @media (max-width:780px){
@@ -366,13 +351,12 @@
       .brand-title{font-size:.95rem}
       .brand-sub{white-space:normal}
       .grid-2,.grid-3,.actions,.toolbar,.stats{grid-template-columns:1fr}
+      #installHint{top:106px;left:12px;right:12px;max-width:none}
     }
   </style>
 </head>
 <body>
 
-  <button id="installBtn" type="button">📲 Instalar app</button>
-  <button id="manualHelpBtn" type="button" class="btn-mini sec" style="position:fixed;left:14px;bottom:88px;z-index:60;width:auto;min-width:unset;padding:10px 12px;border-radius:999px;box-shadow:0 8px 22px rgba(0,0,0,.18);">❔ Como instalar</button>
   <div id="installHint">
     <button id="installHintClose" type="button">×</button>
     <strong>📱 Instalar como app</strong><br>
@@ -381,8 +365,8 @@
 
   <div id="manualInstallBox">
     <div id="manualInstallCard">
-      <h3>📲 Instalar como app</h3>
-      <p id="manualInstallText">Se o Chrome não abrir a instalação automática, use a opção manual do navegador.</p>
+      <h3>📲 Como instalar</h3>
+      <p id="manualInstallText">Se a instalação automática não abrir, use a opção manual do navegador.</p>
       <ol id="manualInstallSteps">
         <li>Toque no menu <strong>⋮</strong> do Chrome.</li>
         <li>Toque em <strong>Adicionar à tela inicial</strong> ou <strong>Instalar app</strong>.</li>
@@ -402,12 +386,12 @@
           <div class="logo">📄</div>
           <div>
             <div class="brand-title">PROTOCOLO SSCI</div>
-            <div class="brand-sub">
-              Entrada de documentos
-              </div>
+            <div class="brand-sub">Entrada de documentos</div>
           </div>
         </div>
         <div class="head-actions">
+          <button id="btnInstallTop" class="btn-mini" type="button">📲 Instalar</button>
+          <button id="btnHowInstallTop" class="btn-mini sec" type="button">❔ Como instalar</button>
           <div id="pillUser" class="pill">👤 Sem login</div>
           <div id="pillAdmin" class="pill hidden">🛡️ Admin</div>
           <button id="btnGoLogin" class="btn-mini" type="button">🔐 Entrar</button>
@@ -1389,19 +1373,18 @@
       renderLista();
     }
 
-
     function isStandaloneMode(){
       return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
     }
 
     function showInstallButton(){
       if(isStandaloneMode()) return;
-      const btn = $('installBtn');
+      const btn = $('btnInstallTop');
       if(btn) btn.classList.add('show');
     }
 
     function hideInstallButton(){
-      const btn = $('installBtn');
+      const btn = $('btnInstallTop');
       if(btn) btn.classList.remove('show');
     }
 
@@ -1426,11 +1409,12 @@
       const isIOS = /iphone|ipad|ipod/.test(ua);
       const text = $('manualInstallText');
       const steps = $('manualInstallSteps');
+
       if(isIOS){
         text.textContent = 'No iPhone/iPad a instalação é manual pelo menu de compartilhamento.';
         steps.innerHTML = '<li>Toque em <strong>Compartilhar</strong> no Safari.</li><li>Toque em <strong>Adicionar à Tela de Início</strong>.</li><li>Abra pelo ícone criado na tela inicial.</li>';
       } else {
-        text.textContent = 'Se o Chrome não abrir a instalação automática, use a opção manual do navegador.';
+        text.textContent = 'Se a instalação automática não abrir, use a opção manual do navegador.';
         steps.innerHTML = '<li>Toque no menu <strong>⋮</strong> do Chrome.</li><li>Toque em <strong>Adicionar à tela inicial</strong> ou <strong>Instalar app</strong>.</li><li>Depois abra pelo ícone criado na tela inicial.</li>';
       }
       $('manualInstallBox').classList.add('show');
@@ -1441,19 +1425,20 @@
     }
 
     async function instalarApp(){
-      if(deferredPrompt){
-        deferredPrompt.prompt();
-        const choice = await deferredPrompt.userChoice;
-        deferredPrompt = null;
-        hideInstallButton();
-        if(choice && choice.outcome === 'accepted'){
-          showMessage('App instalado com sucesso.', 'ok');
-          return;
-        }
+      if(!deferredPrompt){
+        showManualInstallBox();
+        return;
       }
-      showManualInstallBox();
-    }
 
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      hideInstallButton();
+
+      if(choice && choice.outcome === 'accepted'){
+        showMessage('App instalado com sucesso.', 'ok');
+      }
+    }
 
     function bindEvents(){
       document.querySelectorAll('.tabbar button').forEach(btn => {
@@ -1501,8 +1486,8 @@
       $('btnAlterarSenha').addEventListener('click', alterarSenha);
       $('btnLimparSenha').addEventListener('click', clearSenhaForm);
 
-      $('installBtn').addEventListener('click', instalarApp);
-      $('manualHelpBtn').addEventListener('click', showManualInstallBox);
+      $('btnInstallTop').addEventListener('click', instalarApp);
+      $('btnHowInstallTop').addEventListener('click', showManualInstallBox);
       $('installHintClose').addEventListener('click', hideInstallHint);
       $('manualInstallClose').addEventListener('click', hideManualInstallBox);
       $('manualInstallOk').addEventListener('click', hideManualInstallBox);
@@ -1520,6 +1505,7 @@
         deferredPrompt = null;
         hideInstallButton();
         hideInstallHint();
+        hideManualInstallBox();
       });
     }
 
@@ -1548,4 +1534,4 @@
     boot();
   </script>
 </body>
-  </html>
+</html>
