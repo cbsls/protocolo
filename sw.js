@@ -1,4 +1,4 @@
-const CACHE_NAME = 'entrada-documentos-cbsls-v1';
+const CACHE_NAME = 'protocolo-ssci-cbsls-v1';
 
 const ASSETS = [
   './',
@@ -39,9 +39,9 @@ self.addEventListener('fetch', (event) => {
 
       return fetch(event.request)
         .then((response) => {
-          const respostaClone = response.clone();
+          const clone = response.clone();
           caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, respostaClone);
+            cache.put(event.request, clone);
           });
           return response;
         })
