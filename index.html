@@ -546,7 +546,7 @@
   <script>
     const SUPABASE_URL = 'https://azltlpjyyqecurmebffm.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_ODDfIVnGOb1csV9DA8kURQ_pbKPeQNO';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const $ = (id) => document.getElementById(id);
 
@@ -714,7 +714,7 @@
     }
 
     async function loadMilitares(){
-      const { data, error } = await supabase
+      const { data, error } = await sb
         .from('militares_ssci')
         .select('*')
         .eq('ativo', true)
@@ -745,7 +745,7 @@
         return;
       }
 
-      const { data, error } = await supabase
+      const { data, error } = await sb
         .from('militares_ssci')
         .select('*')
         .eq('id_func', idFunc)
@@ -785,7 +785,7 @@
     async function reloadSessionFromDb(){
       if(!userSession?.id_func) return;
 
-      const { data, error } = await supabase
+      const { data, error } = await sb
         .from('militares_ssci')
         .select('*')
         .eq('id_func', userSession.id_func)
@@ -830,7 +830,7 @@
         return;
       }
 
-      const { data, error } = await supabase
+      const { data, error } = await sb
         .from('militares_ssci')
         .select('senha')
         .eq('id_func', userSession.id_func)
@@ -846,7 +846,7 @@
         return;
       }
 
-      const { error: upErr } = await supabase
+      const { error: upErr } = await sb
         .from('militares_ssci')
         .update({ senha: nova })
         .eq('id_func', userSession.id_func);
@@ -912,7 +912,7 @@
         return;
       }
 
-      const { error } = await supabase
+      const { error } = await sb
         .from('documentos_ssci')
         .insert([{
           nome_solicitante: nomeSolicitante,
@@ -943,7 +943,7 @@
     }
 
     async function loadDocumentos(showToast=false){
-      const { data, error } = await supabase
+      const { data, error } = await sb
         .from('documentos_ssci')
         .select('*')
         .order('created_at', { ascending:false });
@@ -1179,7 +1179,7 @@
         return;
       }
 
-      const { error } = await supabase
+      const { error } = await sb
         .from('documentos_ssci')
         .update({
           resposta_ssci: resposta,
