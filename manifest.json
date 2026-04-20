@@ -1,23 +1,27 @@
 {
   "name": "📄 Protocolo SSCI • CB SLS",
   "short_name": "Protocolo SSCI",
-  "start_url": "./",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui"],
   "background_color": "#f5efe6",
   "theme_color": "#c9b18a",
   "orientation": "portrait",
+  "lang": "pt-BR",
+  "description": "Sistema de protocolo SSCI • CB SLS",
   "icons": [
     {
       "src": "icon.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "icon.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
