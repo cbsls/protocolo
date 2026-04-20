@@ -2,207 +2,108 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>📄 Protocolo SSCI • CB SLS</title>
-  <meta name="theme-color" content="#c7b08a" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#c9b18a" />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icon.png" />
   <link rel="apple-touch-icon" href="icon.png" />
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
-
+    *{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;-webkit-tap-highlight-color:transparent}
     :root{
       --bg:#f5efe6;
-      --bg-2:#efe6d8;
+      --bg2:#efe5d6;
       --card:#fffdf9;
-      --card-2:#faf5ec;
-      --header:#d8c0a0;
-      --header-2:#c7b08a;
-      --primary:#8e6f42;
-      --primary-2:#a68452;
-      --text:#111111;
-      --muted:#595959;
-      --border:#dccfbd;
-      --chip:#efe5d7;
-      --success:#2f6b39;
-      --success-bg:#e7f5e8;
-      --danger:#8f2d2d;
-      --danger-bg:#faecec;
-      --warning:#8a6418;
-      --warning-bg:#fff5dd;
-      --info:#1e5a89;
-      --info-bg:#eaf4fb;
-      --shadow:0 2px 8px rgba(0,0,0,.08);
+      --card2:#fbf7f1;
+      --header:#d9c3a3;
+      --header2:#c9b18a;
+      --line:#ded2c1;
+      --text:#111;
+      --muted:#5d5d5d;
+      --primary:#8b6b3f;
+      --primary2:#a07d49;
+      --success:#2f6a39;
+      --successbg:#e7f4e8;
+      --warn:#8a6216;
+      --warnbg:#fff4d7;
+      --done:#265d8f;
+      --donebg:#e9f3fb;
+      --shadow:0 2px 10px rgba(0,0,0,.08);
       --radius:18px;
     }
-
-    html { scroll-behavior: smooth; }
-
+    html{scroll-behavior:smooth}
     body{
       margin:0;
-      background:linear-gradient(180deg, var(--header) 0 120px, var(--bg) 120px 100%);
+      background:linear-gradient(180deg,var(--header) 0 120px,var(--bg) 120px 100%);
       color:var(--text);
       min-height:100vh;
     }
-
     .app{
-      max-width:960px;
+      max-width:980px;
       margin:0 auto;
       min-height:100vh;
-      padding:0 0 96px;
+      padding:0 0 98px;
     }
-
     .topbar{
       position:sticky;
       top:0;
-      z-index:50;
-      background:linear-gradient(180deg, var(--header), var(--header-2));
+      z-index:20;
+      background:linear-gradient(180deg,var(--header),var(--header2));
       box-shadow:0 2px 10px rgba(0,0,0,.12);
-      color:#111;
     }
-
-    .wa-head{
+    .topbar-inner{
       display:flex;
-      align-items:center;
       justify-content:space-between;
+      align-items:center;
       gap:10px;
       padding:12px 14px;
     }
-
-    .wa-profile{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-      flex:1;
+    .brand{
+      display:flex;align-items:center;gap:10px;min-width:0;flex:1;
     }
-
-    .wa-avatar{
-      width:44px;
-      height:44px;
-      border-radius:50%;
-      display:grid;
-      place-items:center;
+    .logo{
+      width:42px;height:42px;border-radius:50%;
+      display:grid;place-items:center;
       background:rgba(255,255,255,.45);
-      border:1px solid rgba(255,255,255,.65);
-      font-size:22px;
-      flex-shrink:0;
-    }
-
-    .wa-title-wrap{ min-width:0; flex:1; }
-
-    .wa-title{
-      font-size:1rem;
-      font-weight:700;
-      line-height:1.15;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .wa-subtitle{
-      margin-top:4px;
-      font-size:11px;
-      color:#1b1b1b;
-      opacity:.88;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .admin-inline{
-      display:flex;
-      align-items:center;
-      gap:6px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:4px;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:700;
-      background:rgba(255,255,255,.5);
       border:1px solid rgba(255,255,255,.7);
-      color:#111;
-      min-height:30px;
-      text-align:center;
-      white-space:nowrap;
+      font-size:20px;flex-shrink:0;
     }
-
-    .pill.on{
-      background:#efe7d9;
-      border-color:#d6c1a1;
+    .brand-title{font-size:1rem;font-weight:700;line-height:1.15}
+    .brand-sub{font-size:11px;color:#1d1d1d;opacity:.9;margin-top:3px}
+    .head-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+    .pill{
+      display:inline-flex;align-items:center;justify-content:center;
+      min-height:30px;padding:6px 10px;border-radius:999px;
+      font-size:11px;font-weight:700;background:rgba(255,255,255,.55);
+      border:1px solid rgba(255,255,255,.75);color:#111;white-space:nowrap;
     }
-
-    .pill.admin{
-      background:#f5ebda;
-      border-color:#bfa06d;
+    .btn-mini{
+      border:0;border-radius:999px;padding:7px 10px;min-height:30px;
+      font-size:11px;font-weight:700;cursor:pointer;background:rgba(255,255,255,.58);color:#111;
     }
-
-    .wa-mini-btn{
-      border:0;
-      border-radius:999px;
-      padding:7px 10px;
-      font-size:11px;
-      font-weight:700;
-      cursor:pointer;
-      background:rgba(255,255,255,.52);
-      color:#111;
-      min-height:30px;
-      min-width:30px;
-    }
-
-    .wa-mini-btn.sec{ background:rgba(0,0,0,.08); }
-
-    .screen{
-      display:none;
-      padding:12px;
-    }
-
-    .screen.active{ display:block; }
-
+    .btn-mini.sec{background:rgba(0,0,0,.08)}
+    .screen{display:none;padding:12px}
+    .screen.active{display:block}
     .card{
       background:var(--card);
+      border:1px solid var(--line);
       border-radius:var(--radius);
       padding:14px;
+      margin-bottom:12px;
       box-shadow:var(--shadow);
-      border:1px solid var(--border);
-      margin-bottom:12px;
     }
-
-    .card h2{
-      margin:0 0 8px;
+    .card h2,.card h3{margin:0 0 8px}
+    .sub{font-size:12px;color:var(--muted);line-height:1.45;margin-bottom:12px}
+    .info-box{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      background:var(--card2);
+      font-size:13px;
+      line-height:1.5;
       color:#222;
-      font-size:1rem;
     }
-
-    .sub{
-      color:var(--muted);
-      font-size:12px;
-      margin-bottom:12px;
-      line-height:1.45;
-    }
-
-    .muted-line{
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.45;
-    }
-
     label{
       display:block;
       margin:10px 0 6px;
@@ -210,70 +111,31 @@
       font-weight:700;
       color:#222;
     }
-
-    input, textarea, select, button{
+    input,select,textarea,button{
       width:100%;
       border-radius:12px;
-      border:1px solid var(--border);
+      border:1px solid var(--line);
+      background:#fff;
       padding:11px 12px;
       font-size:14px;
-      background:#fff;
       outline:none;
       color:#111;
     }
-
-    textarea{
-      min-height:100px;
-      resize:vertical;
+    input:focus,select:focus,textarea:focus{
+      border-color:#b5925d;
+      box-shadow:0 0 0 3px rgba(181,146,93,.12);
     }
-
-    input:focus, textarea:focus, select:focus{
-      border-color:#b99862;
-      box-shadow:0 0 0 3px rgba(166,132,82,.12);
-    }
-
-    input[readonly], textarea[readonly]{
-      background:#f7f3ed;
-      color:#444;
-    }
-
-    button{
-      border:0;
-      cursor:pointer;
-      font-weight:700;
-    }
-
-    button:disabled, input:disabled, textarea:disabled, select:disabled{
-      opacity:.65;
-      cursor:not-allowed;
-    }
-
-    .btn-primary{ background:var(--primary); color:#fff; }
-    .btn-sec{ background:#6d6559; color:#fff; }
-    .btn-ghost{ background:#efe5d7; color:#222; }
-    .btn-danger{ background:#9b3b3b; color:#fff; }
-    .btn-success{ background:#527b3d; color:#fff; }
-    .btn-install{ background:var(--primary); color:#fff; margin-top:10px; }
-
-    .grid-2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-    }
-
-    .grid-3{
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:10px;
-    }
-
-    .actions{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      margin-top:14px;
-    }
-
+    input[readonly],textarea[readonly]{background:#f7f2ea;color:#4c4c4c}
+    textarea{min-height:110px;resize:vertical}
+    button{border:0;cursor:pointer;font-weight:700}
+    button:disabled,input:disabled,select:disabled,textarea:disabled{opacity:.65;cursor:not-allowed}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-secondary{background:#6d6255;color:#fff}
+    .btn-ghost{background:#eee3d3;color:#222}
+    .btn-danger{background:#9b3b3b;color:#fff}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
     .msg{
       margin:12px;
       padding:12px 14px;
@@ -283,465 +145,108 @@
       font-size:14px;
       box-shadow:var(--shadow);
     }
-
-    .msg.ok{
-      display:block;
-      background:var(--success-bg);
-      color:var(--success);
-      border:1px solid #bfd9c2;
-    }
-
-    .msg.erro{
-      display:block;
-      background:var(--danger-bg);
-      color:var(--danger);
-      border:1px solid #e5c8c8;
-    }
-
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:10px;
-    }
-
+    .msg.ok{display:block;background:var(--successbg);color:var(--success);border:1px solid #c7dcc9}
+    .msg.erro{display:block;background:#faecec;color:#8c2d2d;border:1px solid #e6c8c8}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
     .stat{
-      background:var(--card-2);
-      border:1px solid var(--border);
+      background:var(--card2);
+      border:1px solid var(--line);
       border-radius:16px;
       padding:12px 10px;
       text-align:center;
       cursor:pointer;
-      transition:transform .15s ease, box-shadow .15s ease;
-      user-select:none;
+      transition:transform .15s ease,box-shadow .15s ease;
     }
-
-    .stat:hover{
-      transform:translateY(-1px);
-      box-shadow:0 4px 14px rgba(0,0,0,.08);
+    .stat:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.08)}
+    .stat .num{font-size:22px;font-weight:700;color:var(--primary);line-height:1;margin-bottom:4px}
+    .stat .lab{font-size:11px;color:var(--muted);font-weight:700}
+    .search-pill{
+      display:flex;align-items:center;gap:8px;
+      background:#fff;border:1px solid var(--line);border-radius:999px;
+      padding:10px 12px;box-shadow:var(--shadow);margin-bottom:10px
     }
-
-    .stat .num{
-      font-size:22px;
-      font-weight:700;
-      color:var(--primary);
-      margin-bottom:3px;
-      line-height:1;
+    .search-pill input{border:0;padding:0;background:transparent;box-shadow:none}
+    .toolbar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .check{
+      display:flex;align-items:center;gap:8px;padding:12px;
+      border:1px solid var(--line);background:#fff;border-radius:12px;
+      font-weight:700;font-size:13px;color:#333;
     }
-
-    .stat .lab{
-      font-size:11px;
-      color:var(--muted);
-      line-height:1.2;
-      font-weight:700;
+    .check input{width:auto;margin:0}
+    .badge{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:6px 10px;border-radius:999px;font-size:11px;font-weight:700;
+      background:#efe4d4;color:#222;border:1px solid #e3d8c8;white-space:nowrap;
     }
-
-    .toolbar{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:10px;
-    }
-
-    .check-box{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      background:#fff;
-      border:1px solid var(--border);
-      border-radius:12px;
-      padding:12px;
-      width:100%;
-      font-weight:700;
-      color:#333;
-      font-size:13px;
-    }
-
-    .check-box input{
-      width:auto;
-      margin:0;
-    }
-
-    .mini-badges{
-      display:flex;
-      gap:6px;
-      flex-wrap:wrap;
-      margin-top:8px;
-    }
-
-    .badge, .chip{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:700;
-      white-space:nowrap;
-      background:var(--chip);
-      color:#222;
-      border:1px solid #e1d6c7;
-    }
-
-    .st-recebido{ background:var(--info-bg); color:var(--info); }
-    .st-analise{ background:var(--warning-bg); color:var(--warning); }
-    .st-encaminhado{ background:#f1ebfb; color:#5b3c97; }
-    .st-concluido{ background:var(--success-bg); color:var(--success); }
-    .st-arquivado{ background:#f2f2f2; color:#4c4c4c; }
-    .st-devolvido{ background:#fbefef; color:var(--danger); }
-
-    .pr-baixa{ background:#f1ece4; color:#555; }
-    .pr-media{ background:#fff3d8; color:#8a6418; }
-    .pr-alta{ background:#fde6e6; color:#a12f2f; }
-
+    .mini-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+    .st-pendente{background:var(--warnbg);color:var(--warn)}
+    .st-encaminhado{background:#efe7ff;color:#5f3d9b}
+    .st-concluido{background:var(--donebg);color:var(--done)}
+    .pr-baixa{background:#f1ece3;color:#555}
+    .pr-media{background:#fff4d7;color:#8a6216}
+    .pr-alta{background:#fde8e8;color:#9a2f2f}
     .ticket{
-      position:relative;
+      background:var(--card);
+      border:1px solid var(--line);
       border-radius:14px;
       padding:12px;
-      border:1px solid var(--border);
       box-shadow:var(--shadow);
       margin-bottom:12px;
-      background:var(--card);
     }
-
-    .ticket.high{ background:#fff9f7; }
-    .ticket.done{ background:#f8fcf7; }
-    .ticket.returned{ background:#fff8f8; }
-
-    .ticket-head{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      align-items:flex-start;
+    .ticket.high{background:#fff8f6}
+    .ticket.done{background:#f7fbff}
+    .ticket-title{font-size:15px;font-weight:700;color:#111;margin-bottom:4px}
+    .ticket-sub{font-size:14px;line-height:1.55;color:#222;white-space:pre-wrap}
+    .meta{display:grid;gap:6px;font-size:12px;color:#2c2c2c;margin-top:10px}
+    .block{
+      margin-top:10px;padding:10px;border-radius:12px;border:1px solid var(--line);
+      background:#faf5ec;font-size:12px;line-height:1.5;white-space:pre-wrap;color:#222;
     }
-
-    .ticket-title{
-      font-weight:700;
-      color:#111;
-      font-size:15px;
-      margin-bottom:4px;
+    .timer{
+      margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);
+      background:#f8f2e8;font-size:12px;color:#514026;
     }
-
-    .ticket-sub{
-      color:#222;
-      font-size:14px;
-      white-space:pre-wrap;
-      line-height:1.55;
-    }
-
-    .meta{
-      display:grid;
-      gap:6px;
-      font-size:12px;
-      margin-top:10px;
-      color:#2d2d2d;
-    }
-
-    .timer-box{
-      margin-top:10px;
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:#faf6ef;
-      color:#333;
-      display:grid;
-      gap:4px;
-    }
-
-    .timer-box .timer-label{
-      font-size:11px;
-      font-weight:700;
-      text-transform:uppercase;
-      letter-spacing:.3px;
-      opacity:.85;
-    }
-
-    .timer-box .timer-value{
-      font-size:15px;
-      font-weight:700;
-      line-height:1.2;
-    }
-
-    .timer-box.running{
-      background:#f8f3e8;
-      color:#664b20;
-    }
-
-    .timer-box.done{
-      background:#eef7ef;
-      color:#2f6b39;
-    }
-
-    .timer-box.returned{
-      background:#fdf0f0;
-      color:#8f2d2d;
-    }
-
-    .response-box, .obs-box{
-      margin-top:10px;
-      padding:10px;
-      border-radius:12px;
-      font-size:12px;
-      white-space:pre-wrap;
-      line-height:1.45;
-      border:1px solid var(--border);
-      background:#faf5ec;
-      color:#2a2a2a;
-    }
-
-    .response-box{
-      background:#f5efe5;
-    }
-
-    .obs-box{
-      background:#f9f6f0;
-    }
-
-    .admin-area{
-      display:grid;
-      gap:8px;
-      margin-top:12px;
-      padding-top:12px;
-      border-top:1px solid var(--border);
-    }
-
-    .login-status{
-      margin-top:10px;
-      padding:10px 12px;
-      border-radius:12px;
-      font-size:13px;
-      line-height:1.45;
-      border:1px solid var(--border);
-      background:#faf6ef;
-      color:#2e2e2e;
-    }
-
-    .login-status.ok{
-      background:#f7f0e5;
-      color:#3d3121;
-      border-color:#dccfb9;
-    }
-
-    .home-lista{
-      display:grid;
-      gap:10px;
-    }
-
-    .home-actions{
-      display:flex;
-      justify-content:flex-end;
-      margin-bottom:10px;
-    }
-
-    .home-toggle-all-btn{
-      width:auto;
-      padding:9px 12px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:#efe5d7;
-      color:#222;
-      font-size:12px;
-      font-weight:700;
-      cursor:pointer;
-    }
-
+    .home-list{display:grid;gap:10px}
     .home-item{
-      border:1px solid var(--border);
-      background:var(--card);
-      border-radius:14px;
-      padding:12px;
-      box-shadow:var(--shadow);
+      border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px;box-shadow:var(--shadow);
     }
-
-    .home-item-top{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:8px;
-    }
-
-    .home-item-top-left{
-      min-width:0;
-      flex:1;
-    }
-
-    .home-item-titulo{
-      font-weight:700;
-      font-size:14px;
-      color:#111;
-      line-height:1.35;
-      margin-bottom:6px;
-      word-break:break-word;
-    }
-
-    .home-item-top-right{
-      display:flex;
-      flex-direction:column;
-      align-items:flex-end;
-      gap:6px;
-      flex-shrink:0;
-    }
-
-    .home-toggle-btn{
-      width:auto;
-      padding:7px 10px;
-      border-radius:10px;
-      border:1px solid var(--border);
-      background:#f4ede2;
-      color:#222;
-      font-size:11px;
-      font-weight:700;
-      cursor:pointer;
-    }
-
-    .home-item-details{
-      margin-top:10px;
-      display:block;
-    }
-
-    .home-item-details.hidden{ display:none; }
-
-    .home-item-meta{
-      font-size:12px;
-      color:#444;
-      display:grid;
-      gap:4px;
-      margin-top:8px;
-    }
-
-    .home-vazio{
-      padding:16px;
-      border:1px dashed var(--border);
-      border-radius:14px;
-      background:#faf6ef;
-      color:#555;
-      font-size:13px;
-      text-align:center;
-    }
-
     .tabbar{
-      position:fixed;
-      left:50%;
-      transform:translateX(-50%);
-      bottom:10px;
-      z-index:60;
-      width:min(960px, calc(100% - 14px));
-      background:rgba(255,253,249,.97);
-      backdrop-filter:blur(14px);
-      border:1px solid var(--border);
-      border-radius:22px;
-      box-shadow:0 10px 24px rgba(0,0,0,.14);
-      padding:8px;
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:8px;
+      position:fixed;left:50%;transform:translateX(-50%);bottom:10px;z-index:30;
+      width:min(980px,calc(100% - 14px));background:rgba(255,253,249,.97);
+      border:1px solid var(--line);border-radius:22px;box-shadow:0 10px 24px rgba(0,0,0,.14);
+      padding:8px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;
+      backdrop-filter:blur(14px)
     }
-
     .tabbar button{
-      background:transparent;
-      color:#4d4d4d;
-      padding:10px 6px;
-      border-radius:14px;
-      font-size:12px;
-      border:none;
-      box-shadow:none;
-      line-height:1.15;
+      background:transparent;color:#4f4f4f;padding:10px 6px;border-radius:14px;font-size:12px;border:none
     }
-
-    .tabbar button.active{
-      background:#efe3d1;
-      color:#3d2f1b;
-      font-weight:700;
-    }
-
-    .hidden{ display:none !important; }
-
-    .search-pill{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      background:#fff;
-      border:1px solid var(--border);
-      border-radius:999px;
-      padding:10px 12px;
-      margin-bottom:10px;
-      box-shadow:var(--shadow);
-    }
-
-    .search-pill input{
-      border:0;
-      padding:0;
-      background:transparent;
-      box-shadow:none;
-    }
-
-    .search-pill input:focus{ box-shadow:none; }
-
-    .section-label{
-      margin:10px 0 12px;
-      padding:10px 14px;
-      border-radius:14px;
-      background:#f3ecdf;
-      color:#3f311c;
-      font-weight:700;
-      font-size:14px;
-      border:1px solid var(--border);
-      box-shadow:var(--shadow);
-    }
-
-    .info-block{
-      background:#f9f3e9;
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:12px;
-      line-height:1.45;
-      font-size:13px;
-      color:#2a2a2a;
-    }
-
-    .inline-row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .inline-row > *{
-      flex:1;
-      min-width:180px;
-    }
-
-    @media (max-width: 780px){
-      .app{ max-width:560px; }
-      .wa-head{ align-items:flex-start; }
-      .wa-title{
-        white-space:normal;
-        font-size:.95rem;
-      }
-      .wa-subtitle{
-        white-space:normal;
-      }
-      .stats{ grid-template-columns:repeat(2,1fr); }
-      .toolbar{ grid-template-columns:1fr; }
-      .grid-2, .grid-3, .actions{ grid-template-columns:1fr; }
-      .tabbar{ grid-template-columns:repeat(5,1fr); }
+    .tabbar button.active{background:#eee2d0;color:#392b18;font-weight:700}
+    .hidden{display:none!important}
+    @media (max-width:780px){
+      .app{max-width:560px}
+      .topbar-inner{align-items:flex-start}
+      .brand-title{font-size:.95rem}
+      .brand-sub{white-space:normal}
+      .grid-2,.grid-3,.actions,.toolbar,.stats{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
   <div class="app">
     <div class="topbar">
-      <div class="wa-head">
-        <div class="wa-profile">
-          <div class="wa-avatar">📄</div>
-          <div class="wa-title-wrap">
-            <div class="wa-title">📄 Protocolo SSCI • CB SLS</div>
-            <div class="wa-subtitle" id="subTopo">Sistema de protocolo com entrada, resposta SSCI e assinatura automática</div>
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="logo">📄</div>
+          <div>
+            <div class="brand-title">📄 Protocolo SSCI • CB SLS</div>
+            <div class="brand-sub">Entrada de documentos com resposta SSCI, assinatura automática e Supabase</div>
           </div>
         </div>
-
-        <div class="admin-inline">
-          <div id="pillProtocolista" class="pill">👤 Sem login</div>
+        <div class="head-actions">
+          <div id="pillUser" class="pill">👤 Sem login</div>
           <div id="pillAdmin" class="pill hidden">🛡️ Admin</div>
-          <button id="btnEntrar" type="button" class="wa-mini-btn">🔐 Entrar</button>
-          <button id="btnSair" type="button" class="wa-mini-btn sec hidden">🚪 Sair</button>
+          <button id="btnGoLogin" class="btn-mini" type="button">🔐 Entrar</button>
+          <button id="btnLogout" class="btn-mini sec hidden" type="button">🚪 Sair</button>
         </div>
       </div>
     </div>
@@ -751,19 +256,15 @@
     <section id="screen-home" class="screen active">
       <div class="card">
         <h2>📊 Resumo dos protocolos</h2>
-        <div class="sub">Toque em uma caixa para abrir a aba Documentos já filtrada.</div>
+        <div class="sub">Toque em uma caixa para abrir a lista já filtrada.</div>
         <div class="stats">
           <div class="stat" data-status="">
             <div class="num" id="stTotal">0</div>
             <div class="lab">Total</div>
           </div>
-          <div class="stat" data-status="Recebido">
-            <div class="num" id="stRecebido">0</div>
-            <div class="lab">Recebidos</div>
-          </div>
-          <div class="stat" data-status="Em análise">
-            <div class="num" id="stAnalise">0</div>
-            <div class="lab">Em análise</div>
+          <div class="stat" data-status="Pendente">
+            <div class="num" id="stPendente">0</div>
+            <div class="lab">Pendentes</div>
           </div>
           <div class="stat" data-status="Encaminhado">
             <div class="num" id="stEncaminhado">0</div>
@@ -773,41 +274,33 @@
             <div class="num" id="stConcluido">0</div>
             <div class="lab">Concluídos</div>
           </div>
-          <div class="stat" data-status="Arquivado">
-            <div class="num" id="stArquivado">0</div>
-            <div class="lab">Arquivados</div>
-          </div>
         </div>
       </div>
 
       <div class="card">
-        <h2>ℹ️ Como funciona</h2>
-        <div class="info-block">
-          1. O <strong>Protocolista do dia</strong> entra com <strong>Id Func + senha</strong>.<br>
-          2. A aba <strong>Novo</strong> registra a entrada do documento com <strong>data e hora automáticas</strong>.<br>
-          3. O campo <strong>Aos Cuidados de</strong> define o militar responsável.<br>
-          4. Militares marcados como <strong>admin</strong> podem acessar a aba <strong>Resposta SSCI</strong> e gravar resposta com <strong>assinatura automática</strong>.
+        <h2>ℹ️ Fluxo do sistema</h2>
+        <div class="info-box">
+          1. O <strong>protocolista do dia</strong> entra com <strong>Id Func + senha</strong>.<br>
+          2. A senha inicial de cada militar é o próprio <strong>Id Func</strong>.<br>
+          3. O documento entra com <strong>data/hora automáticas</strong> e status <strong>Pendente</strong>.<br>
+          4. A aba <strong>Resposta SSCI</strong> é exclusiva para admins e não mostra documentos concluídos.
         </div>
-        <button id="btnInstalarApp" type="button" class="btn-install hidden">📲 Instalar app</button>
       </div>
 
       <div class="card">
-        <h2>📌 Protocolos em andamento</h2>
-        <div class="sub">Documentos que ainda não foram concluídos nem arquivados.</div>
-        <div class="home-actions">
-          <button id="btnToggleAllHome" type="button" class="home-toggle-all-btn">Expandir todos</button>
-        </div>
-        <div id="homeListaAbertos" class="home-lista"></div>
+        <h2>📌 Em andamento</h2>
+        <div class="sub">Pendentes e encaminhados mais recentes.</div>
+        <div id="homeList" class="home-list"></div>
       </div>
     </section>
 
     <section id="screen-novo" class="screen">
       <div class="card">
         <h2>🔐 Protocolista do dia</h2>
-        <div class="sub">Somente militar logado pode registrar documento.</div>
-        <div id="statusLoginNovo" class="login-status">Nenhum militar logado.</div>
+        <div class="sub">Faça login para liberar o cadastro de documentos.</div>
+        <div id="loginStatus" class="info-box">Nenhum militar logado.</div>
 
-        <div id="blocoLoginNovo">
+        <div id="loginBox" style="margin-top:12px;">
           <label for="loginIdFunc">Id Func</label>
           <input id="loginIdFunc" inputmode="numeric" maxlength="20" placeholder="Digite o Id Func" />
 
@@ -815,8 +308,8 @@
           <input id="loginSenha" type="password" placeholder="Digite a senha" />
 
           <div class="actions">
-            <button id="btnLoginNovo" class="btn-primary" type="button">Entrar</button>
-            <button id="btnLimparLoginNovo" class="btn-ghost" type="button">Limpar</button>
+            <button id="btnLogin" class="btn-primary" type="button">Entrar</button>
+            <button id="btnLimparLogin" class="btn-ghost" type="button">Limpar</button>
           </div>
         </div>
       </div>
@@ -825,12 +318,12 @@
         <h2>📅 Dados do protocolo</h2>
         <div class="grid-2">
           <div>
-            <label for="dataProtocoloVisual">Data do Protocolo</label>
-            <input id="dataProtocoloVisual" readonly />
+            <label for="protocoloDataHora">Data e hora do protocolo</label>
+            <input id="protocoloDataHora" readonly />
           </div>
           <div>
-            <label for="protocolistaVisual">Protocolista</label>
-            <input id="protocolistaVisual" readonly />
+            <label for="protocoloProtocolista">Protocolista</label>
+            <input id="protocoloProtocolista" readonly />
           </div>
         </div>
       </div>
@@ -840,7 +333,7 @@
         <div class="grid-3">
           <div>
             <label for="nomeSolicitante">Nome Solicitante</label>
-            <input id="nomeSolicitante" placeholder="Nome do solicitante" />
+            <input id="nomeSolicitante" placeholder="Digite o nome do solicitante" />
           </div>
           <div>
             <label for="telefoneSolicitante">Telefone Solicitante</label>
@@ -855,7 +348,6 @@
 
       <div class="card">
         <h2>📄 Nova entrada de documento</h2>
-
         <div class="grid-2">
           <div>
             <label for="tipoDocumento">Tipo de Documento</label>
@@ -869,10 +361,9 @@
               <option value="OUTROS">Outros (Editável)</option>
             </select>
           </div>
-
-          <div id="grupoTipoOutro" class="hidden">
+          <div id="tipoOutroWrap" class="hidden">
             <label for="tipoDocumentoOutro">Outro tipo</label>
-            <input id="tipoDocumentoOutro" placeholder="Digite o tipo do documento" />
+            <input id="tipoDocumentoOutro" placeholder="Digite o tipo" />
           </div>
         </div>
 
@@ -892,14 +383,14 @@
         </div>
 
         <label for="outrasInformacoes">Outras Informações</label>
-        <textarea id="outrasInformacoes" placeholder="Descreva o documento, pedido, contexto ou observações importantes"></textarea>
+        <textarea id="outrasInformacoes" placeholder="Descreva o documento, pedido, contexto ou observações"></textarea>
 
         <label for="aosCuidadosDe">Aos Cuidados de</label>
         <select id="aosCuidadosDe"></select>
 
         <div class="actions">
           <button id="btnRegistrarDocumento" class="btn-primary" type="button">Registrar documento</button>
-          <button id="btnLimparFormulario" class="btn-ghost" type="button">Limpar</button>
+          <button id="btnLimparNovo" class="btn-ghost" type="button">Limpar</button>
         </div>
       </div>
     </section>
@@ -912,16 +403,12 @@
 
       <div class="card">
         <h2>📋 Filtros</h2>
-
         <div class="toolbar">
           <select id="filtroStatus">
             <option value="">Todos os status</option>
-            <option value="Recebido">Recebido</option>
-            <option value="Em análise">Em análise</option>
+            <option value="Pendente">Pendente</option>
             <option value="Encaminhado">Encaminhado</option>
             <option value="Concluído">Concluído</option>
-            <option value="Arquivado">Arquivado</option>
-            <option value="Devolvido">Devolvido</option>
           </select>
 
           <select id="filtroTipo">
@@ -933,14 +420,14 @@
           </select>
         </div>
 
-        <label class="check-box" style="margin-top:10px;">
+        <label class="check" style="margin-top:10px;">
           <input type="checkbox" id="somenteComResposta" />
           Somente com resposta SSCI
         </label>
 
         <div class="actions">
-          <button type="button" class="btn-ghost" id="btnLimparFiltros">Limpar filtros</button>
-          <button type="button" class="btn-sec" id="btnAtualizarLista">Atualizar lista</button>
+          <button id="btnLimparFiltros" class="btn-ghost" type="button">Limpar filtros</button>
+          <button id="btnAtualizarLista" class="btn-secondary" type="button">Atualizar lista</button>
         </div>
       </div>
 
@@ -950,16 +437,16 @@
     <section id="screen-resposta" class="screen">
       <div class="card">
         <h2>🛡️ Resposta SSCI</h2>
-        <div id="statusAdminResposta" class="login-status">Área restrita para militares administradores.</div>
+        <div id="respostaStatusBox" class="info-box">Área restrita aos militares admins.</div>
       </div>
 
       <div class="card">
         <h2>Selecionar documento</h2>
-        <label for="respostaDocumentoSelect">Documento / Protocolo</label>
-        <select id="respostaDocumentoSelect"></select>
+        <label for="docRespostaSelect">Documento / Protocolo</label>
+        <select id="docRespostaSelect"></select>
 
-        <div id="respostaResumo" class="info-block" style="margin-top:12px;">
-          Selecione um documento para visualizar as informações.
+        <div id="docResumo" class="info-box" style="margin-top:12px;">
+          Selecione um documento para ver o resumo.
         </div>
       </div>
 
@@ -970,30 +457,27 @@
 
         <div class="grid-2">
           <div>
-            <label for="respostaStatus">Status do documento</label>
-            <select id="respostaStatus">
-              <option value="Recebido">Recebido</option>
-              <option value="Em análise">Em análise</option>
+            <label for="respostaNovoStatus">Status do documento</label>
+            <select id="respostaNovoStatus">
+              <option value="Pendente">Pendente</option>
               <option value="Encaminhado">Encaminhado</option>
               <option value="Concluído">Concluído</option>
-              <option value="Arquivado">Arquivado</option>
-              <option value="Devolvido">Devolvido</option>
             </select>
           </div>
           <div>
-            <label for="respostaObservacaoAdmin">Observação complementar</label>
-            <input id="respostaObservacaoAdmin" placeholder="Opcional" />
+            <label for="respostaObs">Observação complementar</label>
+            <input id="respostaObs" placeholder="Opcional" />
           </div>
         </div>
 
         <div class="grid-2">
           <div>
-            <label for="assinaturaResposta">Assinatura do militar</label>
-            <input id="assinaturaResposta" readonly />
+            <label for="respostaAssinatura">Assinatura do militar</label>
+            <input id="respostaAssinatura" readonly />
           </div>
           <div>
-            <label for="dataHoraResposta">Data e hora da resposta</label>
-            <input id="dataHoraResposta" readonly />
+            <label for="respostaDataHora">Data e hora da resposta</label>
+            <input id="respostaDataHora" readonly />
           </div>
         </div>
 
@@ -1032,7 +516,7 @@
 
       <div class="card">
         <h2>🔑 Alterar senha</h2>
-        <div class="sub">No primeiro acesso, a senha inicial é o próprio <strong>Id Func</strong>. Depois você pode alterar aqui.</div>
+        <div class="sub">A primeira senha é o próprio Id Func. Depois, pode ser alterada aqui.</div>
 
         <label for="senhaAtual">Senha atual</label>
         <input id="senhaAtual" type="password" placeholder="Digite a senha atual" />
@@ -1048,13 +532,6 @@
           <button id="btnLimparSenha" class="btn-ghost" type="button">Limpar</button>
         </div>
       </div>
-
-      <div class="card">
-        <h2>🧩 Observação técnica</h2>
-        <div class="info-block">
-          Este login é um controle interno simples do app em frontend + Supabase. Funciona para uso operacional e rastreabilidade do protocolo, mas não tem o mesmo nível de segurança de um sistema corporativo com autenticação de servidor.
-        </div>
-      </div>
     </section>
   </div>
 
@@ -1066,312 +543,229 @@
     <button data-screen="perfil">👤<br>Perfil</button>
   </nav>
 
-  <script type="module">
-    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+  <script>
+    const SUPABASE_URL = 'https://azltlpjyyqecurmebffm.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_ODDfIVnGOb1csV9DA8kURQ_pbKPeQNO';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const SUPABASE_URL = 'https://azltlpjyyqecurmebffm.supabase.co'
-    const SUPABASE_KEY = 'sb_publishable_ODDfIVnGOb1csV9DA8kURQ_pbKPeQNO'
+    const $ = (id) => document.getElementById(id);
 
-    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
-    const $ = (id) => document.getElementById(id)
+    let userSession = null;
+    let militares = [];
+    let documentos = [];
+    let deferredPrompt = null;
 
-    let documentos = []
-    let militares = []
-    let userSession = null
-    let timerUpdater = null
-    let homeExpandedState = {}
-    let deferredPrompt = null
-
-    function showMessage(text, type = 'ok') {
-      const box = $('mensagem')
-      box.className = `msg ${type}`
-      box.textContent = text
-      box.style.display = 'block'
-      clearTimeout(window.__msgTimer)
+    function showMessage(text, type='ok'){
+      const box = $('mensagem');
+      box.className = `msg ${type}`;
+      box.textContent = text;
+      box.style.display = 'block';
+      clearTimeout(window.__msgTimer);
       window.__msgTimer = setTimeout(() => {
-        box.style.display = 'none'
-        box.className = 'msg'
-        box.textContent = ''
-      }, 4000)
+        box.style.display = 'none';
+        box.className = 'msg';
+        box.textContent = '';
+      }, 4000);
     }
 
-    function escapeHtml(text) {
+    function escapeHtml(text){
       return String(text ?? '')
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;')
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'",'&#039;');
     }
 
-    function digitsOnly(v) {
-      return String(v || '').replace(/\D/g, '')
+    function digitsOnly(v){
+      return String(v || '').replace(/\D/g,'');
     }
 
-    function formatPhone(v) {
-      const d = digitsOnly(v).slice(0, 11)
-      if (!d) return ''
-      if (d.length <= 2) return `(${d}`
-      return `(${d.slice(0,2)}) ${d.slice(2)}`
+    function formatPhone(v){
+      const d = digitsOnly(v).slice(0,11);
+      if(!d) return '';
+      if(d.length <= 2) return `(${d}`;
+      return `(${d.slice(0,2)}) ${d.slice(2)}`;
     }
 
-    function formatDateTimeBR(value) {
-      if (!value) return '-'
-      const d = new Date(value)
-      if (Number.isNaN(d.getTime())) return value
-      return d.toLocaleString('pt-BR')
+    function formatDateTimeBR(value){
+      if(!value) return '-';
+      const d = new Date(value);
+      if(Number.isNaN(d.getTime())) return value;
+      return d.toLocaleString('pt-BR');
     }
 
-    function formatNowBR() {
-      return new Date().toLocaleString('pt-BR')
+    function nowBR(){
+      return new Date().toLocaleString('pt-BR');
     }
 
-    function protocolTimestampPreview() {
-      $('dataProtocoloVisual').value = formatNowBR()
+    function getStatusClass(status){
+      if(status === 'Pendente') return 'st-pendente';
+      if(status === 'Encaminhado') return 'st-encaminhado';
+      if(status === 'Concluído') return 'st-concluido';
+      return '';
     }
 
-    function currentUserLabel() {
-      if (!userSession) return 'Sem login'
-      return `${userSession.nome_guerra} • Protocolista`
+    function getPriorityClass(priority){
+      if(priority === 'Baixa') return 'pr-baixa';
+      if(priority === 'Média') return 'pr-media';
+      if(priority === 'Alta') return 'pr-alta';
+      return '';
     }
 
-    function isAdmin() {
-      return !!(userSession && userSession.is_admin)
+    function isAdmin(){
+      return !!(userSession && userSession.is_admin);
     }
 
-    function normalizeTypeValue(doc) {
-      if (!doc) return ''
-      if (doc.tipo_documento === 'OUTROS' && doc.tipo_documento_outro) return doc.tipo_documento_outro
-      return doc.tipo_documento || ''
-    }
-
-    function statusClass(status) {
-      if (status === 'Recebido') return 'st-recebido'
-      if (status === 'Em análise') return 'st-analise'
-      if (status === 'Encaminhado') return 'st-encaminhado'
-      if (status === 'Concluído') return 'st-concluido'
-      if (status === 'Arquivado') return 'st-arquivado'
-      if (status === 'Devolvido') return 'st-devolvido'
-      return ''
-    }
-
-    function priorityClass(priority) {
-      if (priority === 'Baixa') return 'pr-baixa'
-      if (priority === 'Média') return 'pr-media'
-      if (priority === 'Alta') return 'pr-alta'
-      return ''
-    }
-
-    function priorityWeight(priority) {
-      if (priority === 'Alta') return 3
-      if (priority === 'Média') return 2
-      return 1
-    }
-
-    function isResolved(status) {
-      return status === 'Concluído' || status === 'Arquivado'
-    }
-
-    function ticketClass(priority, status) {
-      if (status === 'Devolvido') return 'returned'
-      if (isResolved(status)) return 'done'
-      if (priority === 'Alta') return 'high'
-      return ''
-    }
-
-    function formatDuration(ms) {
-      const totalSeconds = Math.max(0, Math.floor(ms / 1000))
-      const dias = Math.floor(totalSeconds / 86400)
-      const horas = Math.floor((totalSeconds % 86400) / 3600)
-      const minutos = Math.floor((totalSeconds % 3600) / 60)
-      const partes = []
-      if (dias > 0) partes.push(`${dias}d`)
-      if (horas > 0 || dias > 0) partes.push(`${horas}h`)
-      partes.push(`${minutos}min`)
-      return partes.join(' ')
-    }
-
-    function getTempoDocumento(doc) {
-      const inicio = doc.created_at ? new Date(doc.created_at).getTime() : Date.now()
-      let fim = Date.now()
-      let label = '⏱ Em andamento há'
-      let classe = 'running'
-
-      if (isResolved(doc.status)) {
-        fim = doc.updated_at ? new Date(doc.updated_at).getTime() : Date.now()
-        label = '✅ Tempo total'
-        classe = 'done'
-      } else if (doc.status === 'Devolvido') {
-        fim = doc.updated_at ? new Date(doc.updated_at).getTime() : Date.now()
-        label = '↩️ Tempo até devolução'
-        classe = 'returned'
-      }
-
-      return { label, classe, valor: formatDuration(fim - inicio) }
-    }
-
-    function saveSession() {
-      if (userSession) {
-        localStorage.setItem('protocolo_ssci_session', JSON.stringify(userSession))
+    function saveSession(){
+      if(userSession){
+        localStorage.setItem('protocolo_ssci_session', JSON.stringify(userSession));
       } else {
-        localStorage.removeItem('protocolo_ssci_session')
+        localStorage.removeItem('protocolo_ssci_session');
       }
     }
 
-    function loadSession() {
-      try {
-        const raw = localStorage.getItem('protocolo_ssci_session')
-        if (!raw) return
-        userSession = JSON.parse(raw)
-      } catch {
-        userSession = null
+    function loadSession(){
+      try{
+        const raw = localStorage.getItem('protocolo_ssci_session');
+        if(raw) userSession = JSON.parse(raw);
+      }catch(e){
+        userSession = null;
       }
     }
 
-    function updateTopbar() {
-      $('pillProtocolista').textContent = userSession ? `👤 ${currentUserLabel()}` : '👤 Sem login'
-      $('btnEntrar').classList.toggle('hidden', !!userSession)
-      $('btnSair').classList.toggle('hidden', !userSession)
-      $('pillAdmin').classList.toggle('hidden', !isAdmin())
-      $('pillAdmin').classList.toggle('admin', isAdmin())
-    }
+    function updateTop(){
+      $('pillUser').textContent = userSession ? `👤 ${userSession.nome_guerra}` : '👤 Sem login';
+      $('pillAdmin').classList.toggle('hidden', !isAdmin());
+      $('btnGoLogin').classList.toggle('hidden', !!userSession);
+      $('btnLogout').classList.toggle('hidden', !userSession);
 
-    function updateProfileScreen() {
-      $('perfilNomeGuerra').value = userSession?.nome_guerra || ''
-      $('perfilNomeCompleto').value = userSession?.nome_completo || ''
-      $('perfilIdFunc').value = userSession?.id_func || ''
-      $('perfilNivel').value = userSession ? (userSession.is_admin ? 'Protocolista + Admin' : 'Protocolista') : ''
-      $('protocolistaVisual').value = userSession ? userSession.nome_guerra : 'NÃO LOGADO'
-    }
+      $('perfilNomeGuerra').value = userSession?.nome_guerra || '';
+      $('perfilNomeCompleto').value = userSession?.nome_completo || '';
+      $('perfilIdFunc').value = userSession?.id_func || '';
+      $('perfilNivel').value = userSession ? (userSession.is_admin ? 'Protocolista + Admin' : 'Protocolista') : '';
 
-    function updateNovoStatus() {
-      protocolTimestampPreview()
-      if (userSession) {
-        $('statusLoginNovo').className = 'login-status ok'
-        $('statusLoginNovo').innerHTML = `✅ Logado como <strong>${escapeHtml(userSession.nome_guerra)}</strong> • Id Func <strong>${escapeHtml(userSession.id_func)}</strong>`
+      $('protocoloProtocolista').value = userSession ? userSession.nome_guerra : 'NÃO LOGADO';
+      $('protocoloDataHora').value = nowBR();
+
+      if(userSession){
+        $('loginStatus').innerHTML = `✅ Logado como <strong>${escapeHtml(userSession.nome_guerra)}</strong> • Id Func <strong>${escapeHtml(userSession.id_func)}</strong>`;
       } else {
-        $('statusLoginNovo').className = 'login-status'
-        $('statusLoginNovo').textContent = 'Nenhum militar logado.'
+        $('loginStatus').textContent = 'Nenhum militar logado.';
       }
-      toggleFormAccess()
-      updateProfileScreen()
-    }
 
-    function updateRespostaStatus() {
-      if (isAdmin()) {
-        $('statusAdminResposta').className = 'login-status ok'
-        $('statusAdminResposta').innerHTML = `✅ Área liberada para admin <strong>${escapeHtml(userSession.nome_guerra)}</strong>.`
-        $('assinaturaResposta').value = `${userSession.nome_guerra} • ${userSession.nome_completo}`
-      } else if (userSession) {
-        $('statusAdminResposta').className = 'login-status'
-        $('statusAdminResposta').textContent = 'Seu login atual não possui permissão de admin para gravar RESPOSTA SSCI.'
-        $('assinaturaResposta').value = ''
+      if(isAdmin()){
+        $('respostaStatusBox').innerHTML = `✅ Área liberada para admin <strong>${escapeHtml(userSession.nome_guerra)}</strong>.`;
+        $('respostaAssinatura').value = `${userSession.nome_guerra} • ${userSession.nome_completo}`;
+      } else if(userSession) {
+        $('respostaStatusBox').textContent = 'Seu login não possui permissão de admin para gravar RESPOSTA SSCI.';
+        $('respostaAssinatura').value = '';
       } else {
-        $('statusAdminResposta').className = 'login-status'
-        $('statusAdminResposta').textContent = 'Faça login com um militar administrador para usar esta aba.'
-        $('assinaturaResposta').value = ''
+        $('respostaStatusBox').textContent = 'Faça login com um militar admin para usar esta aba.';
+        $('respostaAssinatura').value = '';
       }
-      $('dataHoraResposta').value = formatNowBR()
-      toggleRespostaAccess()
+      $('respostaDataHora').value = nowBR();
+
+      toggleNovoAccess();
+      toggleRespostaAccess();
     }
 
-    function toggleFormAccess() {
-      const enabled = !!userSession
-      const ids = [
+    function toggleNovoAccess(){
+      const enabled = !!userSession;
+      [
         'nomeSolicitante','telefoneSolicitante','ppciSolicitante','tipoDocumento','tipoDocumentoOutro',
-        'numeroDocumento','outrasInformacoes','prioridade','aosCuidadosDe','btnRegistrarDocumento','btnLimparFormulario'
-      ]
-      ids.forEach(id => $(id).disabled = !enabled)
+        'numeroDocumento','prioridade','outrasInformacoes','aosCuidadosDe','btnRegistrarDocumento','btnLimparNovo'
+      ].forEach(id => $(id).disabled = !enabled);
     }
 
-    function toggleRespostaAccess() {
-      const enabled = isAdmin()
-      const ids = ['respostaDocumentoSelect','respostaSsci','respostaStatus','respostaObservacaoAdmin','btnSalvarResposta','btnLimparResposta']
-      ids.forEach(id => $(id).disabled = !enabled)
+    function toggleRespostaAccess(){
+      const enabled = isAdmin();
+      ['docRespostaSelect','respostaSsci','respostaNovoStatus','respostaObs','btnSalvarResposta','btnLimparResposta']
+        .forEach(id => $(id).disabled = !enabled);
     }
 
-    function limparSenhaForm() {
-      $('senhaAtual').value = ''
-      $('senhaNova').value = ''
-      $('senhaNova2').value = ''
+    function clearNovoForm(){
+      $('nomeSolicitante').value = '';
+      $('telefoneSolicitante').value = '';
+      $('ppciSolicitante').value = '';
+      $('tipoDocumento').value = '';
+      $('tipoDocumentoOutro').value = '';
+      $('tipoOutroWrap').classList.add('hidden');
+      $('numeroDocumento').value = '';
+      $('prioridade').value = 'Média';
+      $('outrasInformacoes').value = '';
+      $('aosCuidadosDe').selectedIndex = 0;
+      $('protocoloDataHora').value = nowBR();
     }
 
-    function clearNovoForm() {
-      $('nomeSolicitante').value = ''
-      $('telefoneSolicitante').value = ''
-      $('ppciSolicitante').value = ''
-      $('tipoDocumento').value = ''
-      $('tipoDocumentoOutro').value = ''
-      $('grupoTipoOutro').classList.add('hidden')
-      $('numeroDocumento').value = ''
-      $('outrasInformacoes').value = ''
-      $('prioridade').value = 'Média'
-      $('aosCuidadosDe').selectedIndex = 0
-      protocolTimestampPreview()
+    function clearRespostaForm(keepDoc=true){
+      if(!keepDoc) $('docRespostaSelect').selectedIndex = 0;
+      $('respostaSsci').value = '';
+      $('respostaNovoStatus').value = 'Encaminhado';
+      $('respostaObs').value = '';
+      $('respostaDataHora').value = nowBR();
+      $('docResumo').innerHTML = 'Selecione um documento para ver o resumo.';
     }
 
-    function clearRespostaForm(keepDoc = true) {
-      if (!keepDoc) $('respostaDocumentoSelect').selectedIndex = 0
-      $('respostaSsci').value = ''
-      $('respostaObservacaoAdmin').value = ''
-      $('respostaStatus').value = 'Em análise'
-      $('respostaResumo').innerHTML = 'Selecione um documento para visualizar as informações.'
-      $('dataHoraResposta').value = formatNowBR()
+    function clearSenhaForm(){
+      $('senhaAtual').value = '';
+      $('senhaNova').value = '';
+      $('senhaNova2').value = '';
     }
 
-    async function loadMilitares() {
+    async function loadMilitares(){
       const { data, error } = await supabase
         .from('militares_ssci')
         .select('*')
         .eq('ativo', true)
-        .order('nome_guerra', { ascending: true })
+        .order('nome_guerra', { ascending:true });
 
-      if (error) {
-        console.error(error)
-        showMessage('Erro ao carregar militares: ' + error.message, 'erro')
-        return
+      if(error){
+        console.error(error);
+        showMessage('Erro ao carregar militares: ' + error.message, 'erro');
+        return;
       }
 
-      militares = Array.isArray(data) ? data : []
-      renderMilitarSelects()
+      militares = Array.isArray(data) ? data : [];
+      renderResponsavelSelect();
     }
 
-    function renderMilitarSelects() {
-      const opts = ['<option value="">Selecione</option>']
-      militares.forEach(m => {
-        opts.push(`<option value="${escapeHtml(m.nome_guerra)}">${escapeHtml(m.nome_guerra)}</option>`)
-      })
-      $('aosCuidadosDe').innerHTML = opts.join('')
+    function renderResponsavelSelect(){
+      $('aosCuidadosDe').innerHTML =
+        '<option value="">Selecione</option>' +
+        militares.map(m => `<option value="${escapeHtml(m.nome_guerra)}">${escapeHtml(m.nome_guerra)}</option>`).join('');
     }
 
-    async function loginByCredentials(idFunc, senha) {
-      const id = digitsOnly(idFunc)
-      if (!id || !senha) {
-        showMessage('Informe Id Func e senha.', 'erro')
-        return false
+    async function login(){
+      const idFunc = digitsOnly($('loginIdFunc').value);
+      const senha = $('loginSenha').value;
+
+      if(!idFunc || !senha){
+        showMessage('Informe Id Func e senha.', 'erro');
+        return;
       }
 
       const { data, error } = await supabase
         .from('militares_ssci')
         .select('*')
-        .eq('id_func', id)
+        .eq('id_func', idFunc)
         .eq('ativo', true)
-        .maybeSingle()
+        .maybeSingle();
 
-      if (error) {
-        console.error(error)
-        showMessage('Erro ao validar login: ' + error.message, 'erro')
-        return false
+      if(error){
+        console.error(error);
+        showMessage('Erro ao validar login: ' + error.message, 'erro');
+        return;
       }
 
-      if (!data) {
-        showMessage('Militar não encontrado.', 'erro')
-        return false
+      if(!data){
+        showMessage('Militar não encontrado.', 'erro');
+        return;
       }
 
-      if (String(data.senha || '') !== String(senha)) {
-        showMessage('Senha incorreta.', 'erro')
-        return false
+      if(String(data.senha || '') !== String(senha)){
+        showMessage('Senha incorreta.', 'erro');
+        return;
       }
 
       userSession = {
@@ -1379,180 +773,332 @@
         nome_guerra: data.nome_guerra,
         nome_completo: data.nome_completo,
         is_admin: !!data.is_admin
-      }
-      saveSession()
-      updateTopbar()
-      updateNovoStatus()
-      updateRespostaStatus()
-      showMessage(`Login realizado: ${data.nome_guerra}`, 'ok')
-      return true
+      };
+      saveSession();
+      updateTop();
+      $('loginIdFunc').value = '';
+      $('loginSenha').value = '';
+      showMessage(`Login realizado: ${data.nome_guerra}`, 'ok');
+      await loadDocumentos(false);
     }
 
-    async function handleLoginFromNovo() {
-      const ok = await loginByCredentials($('loginIdFunc').value, $('loginSenha').value)
-      if (ok) {
-        $('loginSenha').value = ''
-        $('loginIdFunc').value = ''
-        renderRespostaDocOptions()
-      }
-    }
+    async function reloadSessionFromDb(){
+      if(!userSession?.id_func) return;
 
-    async function reloadSessionFromDb() {
-      if (!userSession?.id_func) return
       const { data, error } = await supabase
         .from('militares_ssci')
         .select('*')
         .eq('id_func', userSession.id_func)
-        .maybeSingle()
+        .maybeSingle();
 
-      if (error || !data) return
+      if(error || !data) return;
 
       userSession = {
         id_func: data.id_func,
         nome_guerra: data.nome_guerra,
         nome_completo: data.nome_completo,
         is_admin: !!data.is_admin
-      }
-      saveSession()
-      updateTopbar()
-      updateNovoStatus()
-      updateRespostaStatus()
+      };
+      saveSession();
+      updateTop();
     }
 
-    async function alterarSenha() {
-      if (!userSession) {
-        showMessage('Faça login para alterar a senha.', 'erro')
-        return
+    function logout(){
+      userSession = null;
+      saveSession();
+      updateTop();
+      clearRespostaForm(false);
+      showMessage('Sessão encerrada.', 'ok');
+    }
+
+    async function alterarSenha(){
+      if(!userSession){
+        showMessage('Faça login antes de alterar a senha.', 'erro');
+        return;
       }
 
-      const atual = $('senhaAtual').value
-      const nova = $('senhaNova').value
-      const nova2 = $('senhaNova2').value
+      const atual = $('senhaAtual').value;
+      const nova = $('senhaNova').value;
+      const nova2 = $('senhaNova2').value;
 
-      if (!atual || !nova || !nova2) {
-        showMessage('Preencha todos os campos de senha.', 'erro')
-        return
+      if(!atual || !nova || !nova2){
+        showMessage('Preencha todos os campos de senha.', 'erro');
+        return;
       }
-
-      if (nova !== nova2) {
-        showMessage('A confirmação da nova senha não confere.', 'erro')
-        return
+      if(nova !== nova2){
+        showMessage('A confirmação da nova senha não confere.', 'erro');
+        return;
       }
 
       const { data, error } = await supabase
         .from('militares_ssci')
         .select('senha')
         .eq('id_func', userSession.id_func)
-        .maybeSingle()
+        .maybeSingle();
 
-      if (error || !data) {
-        showMessage('Não foi possível validar a senha atual.', 'erro')
-        return
+      if(error || !data){
+        showMessage('Não foi possível validar a senha atual.', 'erro');
+        return;
       }
 
-      if (String(data.senha || '') !== String(atual)) {
-        showMessage('Senha atual incorreta.', 'erro')
-        return
+      if(String(data.senha || '') !== String(atual)){
+        showMessage('Senha atual incorreta.', 'erro');
+        return;
       }
 
       const { error: upErr } = await supabase
         .from('militares_ssci')
         .update({ senha: nova })
-        .eq('id_func', userSession.id_func)
+        .eq('id_func', userSession.id_func);
 
-      if (upErr) {
-        showMessage('Erro ao alterar senha: ' + upErr.message, 'erro')
-        return
+      if(upErr){
+        showMessage('Erro ao alterar senha: ' + upErr.message, 'erro');
+        return;
       }
 
-      limparSenhaForm()
-      showMessage('Senha alterada com sucesso.', 'ok')
+      clearSenhaForm();
+      showMessage('Senha alterada com sucesso.', 'ok');
     }
 
-    function logout() {
-      userSession = null
-      saveSession()
-      updateTopbar()
-      updateNovoStatus()
-      updateRespostaStatus()
-      clearRespostaForm(false)
-      showMessage('Sessão encerrada.', 'ok')
+    function getTipoDocumentoFinal(doc){
+      if(doc.tipo_documento === 'OUTROS' && doc.tipo_documento_outro){
+        return doc.tipo_documento_outro;
+      }
+      return doc.tipo_documento || '';
     }
 
-    function populateFilters() {
-      const tipos = [...new Set(documentos.map(d => normalizeTypeValue(d)).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR'))
-      $('filtroTipo').innerHTML = '<option value="">Todos os tipos</option>' + tipos.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('')
+    async function registrarDocumento(){
+      if(!userSession){
+        showMessage('Faça login como protocolista antes de registrar.', 'erro');
+        return;
+      }
 
-      const responsaveis = [...new Set(documentos.map(d => d.aos_cuidados_de).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR'))
-      $('filtroResponsavel').innerHTML = '<option value="">Todos os responsáveis</option>' + responsaveis.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('')
+      const nomeSolicitante = $('nomeSolicitante').value.trim().toUpperCase();
+      const telefoneSolicitante = formatPhone($('telefoneSolicitante').value);
+      const ppci = $('ppciSolicitante').value.trim().toUpperCase();
+      const tipoDocumento = $('tipoDocumento').value;
+      const tipoDocumentoOutro = $('tipoDocumentoOutro').value.trim().toUpperCase();
+      const numeroDocumento = $('numeroDocumento').value.trim().toUpperCase();
+      const prioridade = $('prioridade').value;
+      const outrasInformacoes = $('outrasInformacoes').value.trim();
+      const aosCuidadosDe = $('aosCuidadosDe').value;
+
+      if(!nomeSolicitante){
+        showMessage('Preencha o nome do solicitante.', 'erro');
+        return;
+      }
+      if(!telefoneSolicitante){
+        showMessage('Preencha o telefone do solicitante.', 'erro');
+        return;
+      }
+      if(!tipoDocumento){
+        showMessage('Selecione o tipo de documento.', 'erro');
+        return;
+      }
+      if(tipoDocumento === 'OUTROS' && !tipoDocumentoOutro){
+        showMessage('Digite o tipo em "Outros".', 'erro');
+        return;
+      }
+      if(!numeroDocumento){
+        showMessage('Preencha o Número DOC / PPCI.', 'erro');
+        return;
+      }
+      if(!outrasInformacoes){
+        showMessage('Preencha Outras Informações.', 'erro');
+        return;
+      }
+      if(!aosCuidadosDe){
+        showMessage('Selecione "Aos Cuidados de".', 'erro');
+        return;
+      }
+
+      const { error } = await supabase
+        .from('documentos_ssci')
+        .insert([{
+          nome_solicitante: nomeSolicitante,
+          telefone_solicitante: telefoneSolicitante,
+          ppci: ppci || null,
+          tipo_documento: tipoDocumento,
+          tipo_documento_outro: tipoDocumento === 'OUTROS' ? tipoDocumentoOutro : null,
+          numero_documento: numeroDocumento,
+          prioridade: prioridade,
+          outras_informacoes: outrasInformacoes,
+          aos_cuidados_de: aosCuidadosDe,
+          status: 'Pendente',
+          protocolista_id_func: userSession.id_func,
+          protocolista_nome_guerra: userSession.nome_guerra,
+          protocolista_nome_completo: userSession.nome_completo
+        }]);
+
+      if(error){
+        console.error(error);
+        showMessage('Erro ao registrar documento: ' + error.message, 'erro');
+        return;
+      }
+
+      clearNovoForm();
+      await loadDocumentos(false);
+      showMessage('Documento registrado com sucesso.', 'ok');
+      trocarTela('documentos');
     }
 
-    async function loadDocumentos(showToast = false) {
+    async function loadDocumentos(showToast=false){
       const { data, error } = await supabase
         .from('documentos_ssci')
         .select('*')
-        .order('created_at', { ascending: false })
+        .order('created_at', { ascending:false });
 
-      if (error) {
-        console.error(error)
-        $('lista').innerHTML = `<div class="card">Erro ao carregar documentos: ${escapeHtml(error.message)}</div>`
-        $('homeListaAbertos').innerHTML = `<div class="home-vazio">Erro ao carregar protocolos.</div>`
-        return
+      if(error){
+        console.error(error);
+        $('lista').innerHTML = `<div class="card">Erro ao carregar documentos: ${escapeHtml(error.message)}</div>`;
+        $('homeList').innerHTML = `<div class="home-item">Erro ao carregar lista.</div>`;
+        return;
       }
 
-      documentos = Array.isArray(data) ? data : []
-      populateFilters()
-      updateStats()
-      renderHomeOpenList()
-      renderDocuments()
-      renderRespostaDocOptions()
-      if (showToast) showMessage(`${documentos.length} documento(s) carregado(s).`, 'ok')
+      documentos = Array.isArray(data) ? data : [];
+      renderFiltroTipo();
+      renderFiltroResponsavel();
+      renderResumo();
+      renderHome();
+      renderLista();
+      renderSelectResposta();
+      if(showToast) showMessage(`${documentos.length} documento(s) carregado(s).`, 'ok');
     }
 
-    function updateStats() {
-      $('stTotal').textContent = documentos.length
-      $('stRecebido').textContent = documentos.filter(d => d.status === 'Recebido').length
-      $('stAnalise').textContent = documentos.filter(d => d.status === 'Em análise').length
-      $('stEncaminhado').textContent = documentos.filter(d => d.status === 'Encaminhado').length
-      $('stConcluido').textContent = documentos.filter(d => d.status === 'Concluído').length
-      $('stArquivado').textContent = documentos.filter(d => d.status === 'Arquivado').length
+    function renderResumo(){
+      $('stTotal').textContent = documentos.length;
+      $('stPendente').textContent = documentos.filter(d => d.status === 'Pendente').length;
+      $('stEncaminhado').textContent = documentos.filter(d => d.status === 'Encaminhado').length;
+      $('stConcluido').textContent = documentos.filter(d => d.status === 'Concluído').length;
     }
 
-    function buildTimerHTML(doc) {
-      const tempo = getTempoDocumento(doc)
-      return `
-        <div class="timer-box ${tempo.classe}">
-          <div class="timer-label">${tempo.label}</div>
-          <div class="timer-value" data-timer-card="${escapeHtml(doc.id)}">${tempo.valor}</div>
-        </div>
-      `
+    function renderFiltroTipo(){
+      const tipos = [...new Set(documentos.map(d => getTipoDocumentoFinal(d)).filter(Boolean))]
+        .sort((a,b) => a.localeCompare(b,'pt-BR'));
+      $('filtroTipo').innerHTML =
+        '<option value="">Todos os tipos</option>' +
+        tipos.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');
     }
 
-    function buildDocumentHTML(doc) {
-      const tipo = normalizeTypeValue(doc)
-      const respostaInfo = doc.resposta_ssci ? `
-        <div class="response-box"><strong>RESPOSTA SSCI</strong><br>${escapeHtml(doc.resposta_ssci)}<br><br><strong>Assinatura:</strong> ${escapeHtml(doc.resposta_assinatura_nome_guerra || '-')}<br><strong>Data/hora:</strong> ${escapeHtml(formatDateTimeBR(doc.resposta_em))}</div>
-      ` : ''
+    function renderFiltroResponsavel(){
+      const resp = [...new Set(documentos.map(d => d.aos_cuidados_de).filter(Boolean))]
+        .sort((a,b) => a.localeCompare(b,'pt-BR'));
+      $('filtroResponsavel').innerHTML =
+        '<option value="">Todos os responsáveis</option>' +
+        resp.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');
+    }
 
-      const obsInfo = doc.observacao_admin ? `<div class="obs-box"><strong>Observação admin:</strong><br>${escapeHtml(doc.observacao_admin)}</div>` : ''
+    function tempoDocumento(doc){
+      const ini = doc.created_at ? new Date(doc.created_at).getTime() : Date.now();
+      const fim = Date.now();
+      const totalSeconds = Math.max(0, Math.floor((fim - ini) / 1000));
+      const dias = Math.floor(totalSeconds / 86400);
+      const horas = Math.floor((totalSeconds % 86400) / 3600);
+      const minutos = Math.floor((totalSeconds % 3600) / 60);
+      const p = [];
+      if(dias > 0) p.push(`${dias}d`);
+      if(horas > 0 || dias > 0) p.push(`${horas}h`);
+      p.push(`${minutos}min`);
+      return p.join(' ');
+    }
 
-      return `
-        <div class="ticket ${ticketClass(doc.prioridade, doc.status)}">
-          <div class="ticket-head">
-            <div>
-              <div class="ticket-title">${escapeHtml(tipo || 'Documento')}</div>
-              <div class="ticket-sub">${escapeHtml(doc.outras_informacoes || '-')}</div>
-            </div>
+    function renderHome(){
+      const abertos = documentos
+        .filter(d => d.status !== 'Concluído')
+        .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
+        .slice(0, 8);
+
+      if(!abertos.length){
+        $('homeList').innerHTML = `<div class="home-item">Nenhum documento em andamento no momento.</div>`;
+        return;
+      }
+
+      $('homeList').innerHTML = abertos.map(doc => `
+        <div class="home-item">
+          <div class="ticket-title">${escapeHtml(getTipoDocumentoFinal(doc))} • ${escapeHtml(doc.numero_documento || 'S/N')}</div>
+          <div class="mini-badges">
+            <span class="badge ${getStatusClass(doc.status)}">${escapeHtml(doc.status)}</span>
+            <span class="badge ${getPriorityClass(doc.prioridade)}">${escapeHtml(doc.prioridade || '-')}</span>
+            <span class="badge">👮 ${escapeHtml(doc.aos_cuidados_de || '-')}</span>
           </div>
+          <div class="meta">
+            <div><strong>Solicitante:</strong> ${escapeHtml(doc.nome_solicitante || '-')}</div>
+            <div><strong>Protocolista:</strong> ${escapeHtml(doc.protocolista_nome_guerra || '-')}</div>
+            <div><strong>Registro:</strong> ${escapeHtml(formatDateTimeBR(doc.created_at))}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderLista(){
+      const busca = $('busca').value.trim().toLowerCase();
+      const filtroStatus = $('filtroStatus').value;
+      const filtroTipo = $('filtroTipo').value;
+      const filtroResponsavel = $('filtroResponsavel').value;
+      const somenteComResposta = $('somenteComResposta').checked;
+
+      const filtrados = documentos.filter(doc => {
+        const pool = [
+          doc.nome_solicitante, doc.telefone_solicitante, doc.ppci,
+          doc.tipo_documento, doc.tipo_documento_outro, doc.numero_documento,
+          doc.outras_informacoes, doc.aos_cuidados_de, doc.status,
+          doc.protocolista_nome_guerra, doc.resposta_ssci, doc.observacao_admin
+        ].join(' ').toLowerCase();
+
+        return (
+          (!busca || pool.includes(busca)) &&
+          (!filtroStatus || doc.status === filtroStatus) &&
+          (!filtroTipo || getTipoDocumentoFinal(doc) === filtroTipo) &&
+          (!filtroResponsavel || doc.aos_cuidados_de === filtroResponsavel) &&
+          (!somenteComResposta || !!doc.resposta_ssci)
+        );
+      });
+
+      if(!filtrados.length){
+        $('lista').innerHTML = `<div class="card">Nenhum documento encontrado com os filtros atuais.</div>`;
+        return;
+      }
+
+      const ativos = filtrados.filter(d => d.status !== 'Concluído');
+      const concluidos = filtrados.filter(d => d.status === 'Concluído');
+
+      let html = '';
+
+      ativos.forEach(doc => {
+        html += buildTicket(doc);
+      });
+
+      if(concluidos.length){
+        html += `<div class="card"><strong>✅ Concluídos</strong></div>`;
+        concluidos.forEach(doc => html += buildTicket(doc));
+      }
+
+      $('lista').innerHTML = html;
+    }
+
+    function buildTicket(doc){
+      const tipo = getTipoDocumentoFinal(doc);
+      const respostaBlock = doc.resposta_ssci ? `
+        <div class="block"><strong>RESPOSTA SSCI</strong><br>${escapeHtml(doc.resposta_ssci)}<br><br><strong>Assinatura:</strong> ${escapeHtml(doc.resposta_assinatura_nome_guerra || '-')}<br><strong>Data/hora:</strong> ${escapeHtml(formatDateTimeBR(doc.resposta_em))}</div>
+      ` : '';
+
+      const obsBlock = doc.observacao_admin ? `
+        <div class="block"><strong>Observação admin</strong><br>${escapeHtml(doc.observacao_admin)}</div>
+      ` : '';
+
+      return `
+        <div class="ticket ${doc.prioridade === 'Alta' ? 'high' : ''} ${doc.status === 'Concluído' ? 'done' : ''}">
+          <div class="ticket-title">${escapeHtml(tipo || 'Documento')}</div>
+          <div class="ticket-sub">${escapeHtml(doc.outras_informacoes || '-')}</div>
 
           <div class="mini-badges">
-            <span class="badge ${statusClass(doc.status)}">${escapeHtml(doc.status || '-')}</span>
-            <span class="badge ${priorityClass(doc.prioridade)}">${escapeHtml(doc.prioridade || '-')}</span>
+            <span class="badge ${getStatusClass(doc.status)}">${escapeHtml(doc.status || '-')}</span>
+            <span class="badge ${getPriorityClass(doc.prioridade)}">${escapeHtml(doc.prioridade || '-')}</span>
             <span class="badge">🔢 ${escapeHtml(doc.numero_documento || '-')}</span>
             <span class="badge">👮 ${escapeHtml(doc.aos_cuidados_de || '-')}</span>
           </div>
 
-          ${buildTimerHTML(doc)}
+          <div class="timer"><strong>Tempo desde o protocolo:</strong> ${escapeHtml(tempoDocumento(doc))}</div>
 
           <div class="meta">
             <div><strong>Protocolista:</strong> ${escapeHtml(doc.protocolista_nome_guerra || '-')}</div>
@@ -1565,317 +1111,72 @@
             <div><strong>Aos cuidados de:</strong> ${escapeHtml(doc.aos_cuidados_de || '-')}</div>
           </div>
 
-          ${respostaInfo}
-          ${obsInfo}
+          ${respostaBlock}
+          ${obsBlock}
         </div>
-      `
+      `;
     }
 
-    function renderDocuments() {
-      const search = $('busca').value.trim().toLowerCase()
-      const status = $('filtroStatus').value
-      const tipo = $('filtroTipo').value
-      const responsavel = $('filtroResponsavel').value
-      const somenteComResposta = $('somenteComResposta').checked
+    function renderSelectResposta(){
+      const abertos = documentos.filter(doc => doc.status !== 'Concluído');
 
-      const filtrados = documentos.filter(doc => {
-        const texto = [
-          doc.nome_solicitante, doc.telefone_solicitante, doc.ppci,
-          doc.tipo_documento, doc.tipo_documento_outro, doc.numero_documento,
-          doc.outras_informacoes, doc.aos_cuidados_de, doc.status,
-          doc.protocolista_nome_guerra, doc.resposta_ssci, doc.observacao_admin
-        ].join(' ').toLowerCase()
+      $('docRespostaSelect').innerHTML =
+        '<option value="">Selecione</option>' +
+        abertos.map(doc => {
+          const tipo = getTipoDocumentoFinal(doc);
+          return `<option value="${escapeHtml(doc.id)}">${escapeHtml(tipo)} • ${escapeHtml(doc.numero_documento || 'S/N')} • ${escapeHtml(doc.nome_solicitante || 'Sem solicitante')}</option>`;
+        }).join('');
+    }
 
-        return (
-          (!search || texto.includes(search)) &&
-          (!status || doc.status === status) &&
-          (!tipo || normalizeTypeValue(doc) === tipo) &&
-          (!responsavel || doc.aos_cuidados_de === responsavel) &&
-          (!somenteComResposta || !!doc.resposta_ssci)
-        )
-      })
+    function fillResumoResposta(){
+      const id = $('docRespostaSelect').value;
+      const doc = documentos.find(d => String(d.id) === String(id));
 
-      const ativos = filtrados
-        .filter(doc => !isResolved(doc.status))
-        .sort((a,b) => {
-          const p = priorityWeight(b.prioridade) - priorityWeight(a.prioridade)
-          if (p !== 0) return p
-          return new Date(b.created_at) - new Date(a.created_at)
-        })
+      $('respostaDataHora').value = nowBR();
 
-      const conclu = filtrados
-        .filter(doc => isResolved(doc.status))
-        .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
-
-      if (!filtrados.length) {
-        $('lista').innerHTML = `<div class="card">Nenhum documento encontrado com os filtros atuais.</div>`
-        return
+      if(!doc){
+        $('docResumo').innerHTML = 'Selecione um documento para ver o resumo.';
+        $('respostaSsci').value = '';
+        $('respostaObs').value = '';
+        $('respostaNovoStatus').value = 'Encaminhado';
+        return;
       }
 
-      let html = ''
-      if (ativos.length) html += ativos.map(buildDocumentHTML).join('')
-      if (conclu.length) {
-        html += `<div class="section-label">✅ Concluídos / Arquivados</div>`
-        html += conclu.map(buildDocumentHTML).join('')
-      }
+      $('respostaSsci').value = doc.resposta_ssci || '';
+      $('respostaObs').value = doc.observacao_admin || '';
+      $('respostaNovoStatus').value = doc.status || 'Pendente';
 
-      $('lista').innerHTML = html
-      updateTicketTimers()
-      startTimerUpdater()
-    }
-
-    function updateTicketTimers() {
-      document.querySelectorAll('[data-timer-card]').forEach(node => {
-        const id = node.getAttribute('data-timer-card')
-        const doc = documentos.find(d => String(d.id) === String(id))
-        if (!doc) return
-        node.textContent = getTempoDocumento(doc).valor
-      })
-      document.querySelectorAll('[data-home-timer]').forEach(node => {
-        const id = node.getAttribute('data-home-timer')
-        const doc = documentos.find(d => String(d.id) === String(id))
-        if (!doc) return
-        node.textContent = getTempoDocumento(doc).valor
-      })
-    }
-
-    function startTimerUpdater() {
-      if (timerUpdater) return
-      timerUpdater = setInterval(() => updateTicketTimers(), 60000)
-    }
-
-    function buildHomeItemHTML(doc) {
-      const expanded = !!homeExpandedState[String(doc.id)]
-      const tempo = getTempoDocumento(doc)
-      const tipo = normalizeTypeValue(doc)
-
-      return `
-        <div class="home-item">
-          <div class="home-item-top">
-            <div class="home-item-top-left">
-              <div class="home-item-titulo">${escapeHtml(tipo || 'Documento')} • ${escapeHtml(doc.numero_documento || 'S/N')}</div>
-              <span class="badge ${statusClass(doc.status)}">${escapeHtml(doc.status || '-')}</span>
-            </div>
-
-            <div class="home-item-top-right">
-              <button
-                type="button"
-                class="home-toggle-btn"
-                data-home-toggle-btn="${escapeHtml(doc.id)}"
-                onclick="toggleHomeDetails('${escapeHtml(doc.id)}')"
-              >${expanded ? '🔼 Recolher' : '🔽 Expandir'}</button>
-            </div>
-          </div>
-
-          <div class="home-item-details ${expanded ? '' : 'hidden'}" data-home-details="${escapeHtml(doc.id)}">
-            <div class="mini-badges">
-              <span class="badge ${priorityClass(doc.prioridade)}">${escapeHtml(doc.prioridade || '-')}</span>
-              <span class="badge">👮 ${escapeHtml(doc.aos_cuidados_de || '-')}</span>
-            </div>
-
-            <div class="timer-box ${tempo.classe}" style="margin-top:10px;">
-              <div class="timer-label">${tempo.label}</div>
-              <div class="timer-value" data-home-timer="${escapeHtml(doc.id)}">${tempo.valor}</div>
-            </div>
-
-            <div class="home-item-meta">
-              <div><strong>Protocolista:</strong> ${escapeHtml(doc.protocolista_nome_guerra || '-')}</div>
-              <div><strong>Solicitante:</strong> ${escapeHtml(doc.nome_solicitante || '-')}</div>
-              <div><strong>Registro:</strong> ${escapeHtml(formatDateTimeBR(doc.created_at))}</div>
-            </div>
-          </div>
-        </div>
-      `
-    }
-
-    function updateHomeToggleAllButton() {
-      const btn = $('btnToggleAllHome')
-      const ids = Object.keys(homeExpandedState)
-      if (!ids.length) {
-        btn.textContent = 'Expandir todos'
-        return
-      }
-      const todos = ids.every(id => homeExpandedState[id] === true)
-      btn.textContent = todos ? 'Recolher todos' : 'Expandir todos'
-    }
-
-    function setHomeItemExpanded(id, expanded) {
-      homeExpandedState[String(id)] = expanded
-      const details = document.querySelector(`[data-home-details="${CSS.escape(String(id))}"]`)
-      const btn = document.querySelector(`[data-home-toggle-btn="${CSS.escape(String(id))}"]`)
-      if (details) details.classList.toggle('hidden', !expanded)
-      if (btn) btn.textContent = expanded ? '🔼 Recolher' : '🔽 Expandir'
-      updateHomeToggleAllButton()
-    }
-
-    function toggleHomeDetails(id) {
-      setHomeItemExpanded(id, !homeExpandedState[String(id)])
-    }
-
-    function toggleAllHomeItems() {
-      const ids = Object.keys(homeExpandedState)
-      if (!ids.length) return
-      const todos = ids.every(id => homeExpandedState[id] === true)
-      ids.forEach(id => setHomeItemExpanded(id, !todos))
-    }
-
-    function renderHomeOpenList() {
-      const abertos = documentos
-        .filter(doc => !isResolved(doc.status))
-        .sort((a,b) => {
-          const p = priorityWeight(b.prioridade) - priorityWeight(a.prioridade)
-          if (p !== 0) return p
-          return new Date(b.created_at) - new Date(a.created_at)
-        })
-        .slice(0, 8)
-
-      const novoEstado = {}
-      abertos.forEach(doc => novoEstado[String(doc.id)] = homeExpandedState[String(doc.id)] || false)
-      homeExpandedState = novoEstado
-
-      if (!abertos.length) {
-        $('homeListaAbertos').innerHTML = `<div class="home-vazio">Nenhum protocolo em andamento no momento.</div>`
-        updateHomeToggleAllButton()
-        return
-      }
-
-      $('homeListaAbertos').innerHTML = abertos.map(buildHomeItemHTML).join('')
-      updateTicketTimers()
-      updateHomeToggleAllButton()
-    }
-
-    function renderRespostaDocOptions() {
-      const options = ['<option value="">Selecione</option>']
-      documentos.forEach(doc => {
-        const tipo = normalizeTypeValue(doc)
-        options.push(`<option value="${escapeHtml(doc.id)}">${escapeHtml(tipo)} • ${escapeHtml(doc.numero_documento || 'S/N')} • ${escapeHtml(doc.nome_solicitante || 'Sem solicitante')}</option>`)
-      })
-      $('respostaDocumentoSelect').innerHTML = options.join('')
-    }
-
-    function fillRespostaResumo() {
-      const id = $('respostaDocumentoSelect').value
-      const doc = documentos.find(d => String(d.id) === String(id))
-      $('dataHoraResposta').value = formatNowBR()
-
-      if (!doc) {
-        $('respostaResumo').innerHTML = 'Selecione um documento para visualizar as informações.'
-        $('respostaSsci').value = ''
-        $('respostaObservacaoAdmin').value = ''
-        $('respostaStatus').value = 'Em análise'
-        return
-      }
-
-      const tipo = normalizeTypeValue(doc)
-      $('respostaSsci').value = doc.resposta_ssci || ''
-      $('respostaObservacaoAdmin').value = doc.observacao_admin || ''
-      $('respostaStatus').value = doc.status || 'Recebido'
-      $('respostaResumo').innerHTML = `
-        <strong>Tipo:</strong> ${escapeHtml(tipo || '-')}<br>
+      $('docResumo').innerHTML = `
+        <strong>Tipo:</strong> ${escapeHtml(getTipoDocumentoFinal(doc) || '-')}<br>
         <strong>Número:</strong> ${escapeHtml(doc.numero_documento || '-')}<br>
         <strong>Solicitante:</strong> ${escapeHtml(doc.nome_solicitante || '-')}<br>
         <strong>PPCI:</strong> ${escapeHtml(doc.ppci || '-')}<br>
         <strong>Aos cuidados de:</strong> ${escapeHtml(doc.aos_cuidados_de || '-')}<br>
         <strong>Protocolista:</strong> ${escapeHtml(doc.protocolista_nome_guerra || '-')}<br>
-        <strong>Data/hora do protocolo:</strong> ${escapeHtml(formatDateTimeBR(doc.created_at))}
-      `
+        <strong>Protocolo:</strong> ${escapeHtml(formatDateTimeBR(doc.created_at))}
+      `;
     }
 
-    async function registrarDocumento() {
-      if (!userSession) {
-        showMessage('Faça login como protocolista antes de registrar.', 'erro')
-        return
+    async function salvarResposta(){
+      if(!isAdmin()){
+        showMessage('Somente admin pode salvar RESPOSTA SSCI.', 'erro');
+        return;
       }
 
-      const tipoSel = $('tipoDocumento').value
-      const tipoOutro = $('tipoDocumentoOutro').value.trim().toUpperCase()
-      const nomeSolicitante = $('nomeSolicitante').value.trim().toUpperCase()
-      const telefone = formatPhone($('telefoneSolicitante').value)
-      const ppci = $('ppciSolicitante').value.trim().toUpperCase()
-      const numeroDocumento = $('numeroDocumento').value.trim().toUpperCase()
-      const outrasInformacoes = $('outrasInformacoes').value.trim()
-      const prioridade = $('prioridade').value
-      const aosCuidadosDe = $('aosCuidadosDe').value
-
-      if (!nomeSolicitante) {
-        showMessage('Preencha o nome do solicitante.', 'erro')
-        return
-      }
-      if (!telefone) {
-        showMessage('Preencha o telefone do solicitante.', 'erro')
-        return
-      }
-      if (!tipoSel) {
-        showMessage('Selecione o tipo de documento.', 'erro')
-        return
-      }
-      if (tipoSel === 'OUTROS' && !tipoOutro) {
-        showMessage('Digite o tipo do documento em "Outros".', 'erro')
-        return
-      }
-      if (!numeroDocumento) {
-        showMessage('Preencha o Número DOC / PPCI.', 'erro')
-        return
-      }
-      if (!outrasInformacoes) {
-        showMessage('Preencha Outras Informações.', 'erro')
-        return
-      }
-      if (!aosCuidadosDe) {
-        showMessage('Selecione "Aos Cuidados de".', 'erro')
-        return
+      const id = $('docRespostaSelect').value;
+      const doc = documentos.find(d => String(d.id) === String(id));
+      if(!doc){
+        showMessage('Selecione um documento.', 'erro');
+        return;
       }
 
-      const { error } = await supabase
-        .from('documentos_ssci')
-        .insert([{
-          nome_solicitante: nomeSolicitante,
-          telefone_solicitante: telefone,
-          ppci: ppci || null,
-          tipo_documento: tipoSel,
-          tipo_documento_outro: tipoSel === 'OUTROS' ? tipoOutro : null,
-          numero_documento: numeroDocumento,
-          outras_informacoes: outrasInformacoes,
-          prioridade: prioridade,
-          aos_cuidados_de: aosCuidadosDe,
-          status: 'Recebido',
-          protocolista_id_func: userSession.id_func,
-          protocolista_nome_guerra: userSession.nome_guerra,
-          protocolista_nome_completo: userSession.nome_completo
-        }])
+      const resposta = $('respostaSsci').value.trim();
+      const novoStatus = $('respostaNovoStatus').value;
+      const obs = $('respostaObs').value.trim();
 
-      if (error) {
-        console.error(error)
-        showMessage('Erro ao registrar documento: ' + error.message, 'erro')
-        return
-      }
-
-      clearNovoForm()
-      await loadDocumentos(false)
-      showMessage('Documento registrado com sucesso.', 'ok')
-      trocarTela('documentos')
-    }
-
-    async function salvarRespostaSsci() {
-      if (!isAdmin()) {
-        showMessage('Somente admin pode salvar RESPOSTA SSCI.', 'erro')
-        return
-      }
-
-      const id = $('respostaDocumentoSelect').value
-      const doc = documentos.find(d => String(d.id) === String(id))
-      if (!doc) {
-        showMessage('Selecione um documento.', 'erro')
-        return
-      }
-
-      const resposta = $('respostaSsci').value.trim()
-      const status = $('respostaStatus').value
-      const observacao = $('respostaObservacaoAdmin').value.trim()
-
-      if (!resposta) {
-        showMessage('Digite a RESPOSTA SSCI.', 'erro')
-        return
+      if(!resposta){
+        showMessage('Digite a RESPOSTA SSCI.', 'erro');
+        return;
       }
 
       const { error } = await supabase
@@ -1886,150 +1187,122 @@
           resposta_assinatura_nome_completo: userSession.nome_completo,
           resposta_assinatura_id_func: userSession.id_func,
           resposta_em: new Date().toISOString(),
-          observacao_admin: observacao || null,
-          status: status
+          observacao_admin: obs || null,
+          status: novoStatus
         })
-        .eq('id', doc.id)
+        .eq('id', doc.id);
 
-      if (error) {
-        console.error(error)
-        showMessage('Erro ao salvar RESPOSTA SSCI: ' + error.message, 'erro')
-        return
+      if(error){
+        console.error(error);
+        showMessage('Erro ao salvar RESPOSTA SSCI: ' + error.message, 'erro');
+        return;
       }
 
-      await loadDocumentos(false)
-      fillRespostaResumo()
-      showMessage('RESPOSTA SSCI salva com assinatura e data/hora.', 'ok')
+      await loadDocumentos(false);
+      fillResumoResposta();
+      showMessage('RESPOSTA SSCI salva com assinatura e data/hora.', 'ok');
     }
 
-    function trocarTela(nome) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'))
-      document.getElementById('screen-' + nome).classList.add('active')
-      document.querySelectorAll('.tabbar button').forEach(b => b.classList.remove('active'))
-      document.querySelector(`.tabbar button[data-screen="${nome}"]`).classList.add('active')
-      if (nome === 'documentos') renderDocuments()
-      if (nome === 'home') renderHomeOpenList()
-      if (nome === 'resposta') fillRespostaResumo()
+    function trocarTela(nome){
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('screen-' + nome).classList.add('active');
+      document.querySelectorAll('.tabbar button').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.tabbar button[data-screen="${nome}"]`).classList.add('active');
+
+      if(nome === 'documentos') renderLista();
+      if(nome === 'resposta') fillResumoResposta();
+      if(nome === 'home') renderHome();
     }
 
-    function limparFiltros() {
-      $('busca').value = ''
-      $('filtroStatus').value = ''
-      $('filtroTipo').value = ''
-      $('filtroResponsavel').value = ''
-      $('somenteComResposta').checked = false
-      renderDocuments()
+    function limparFiltros(){
+      $('busca').value = '';
+      $('filtroStatus').value = '';
+      $('filtroTipo').value = '';
+      $('filtroResponsavel').value = '';
+      $('somenteComResposta').checked = false;
+      renderLista();
     }
 
-    function abrirDocumentosPorStatus(status = '') {
-      $('filtroStatus').value = status
-      $('filtroTipo').value = ''
-      $('filtroResponsavel').value = ''
-      $('somenteComResposta').checked = false
-      $('busca').value = ''
-      trocarTela('documentos')
-      renderDocuments()
+    function abrirPorStatus(status=''){
+      $('filtroStatus').value = status;
+      $('filtroTipo').value = '';
+      $('filtroResponsavel').value = '';
+      $('somenteComResposta').checked = false;
+      $('busca').value = '';
+      trocarTela('documentos');
+      renderLista();
     }
 
-    function atualizarBotaoInstalarApp() {
-      $('btnInstalarApp').classList.toggle('hidden', !deferredPrompt)
-    }
-
-    async function instalarApp() {
-      if (!deferredPrompt) {
-        showMessage('A opção de instalar ainda não está disponível neste navegador.', 'erro')
-        return
-      }
-
-      deferredPrompt.prompt()
-      await deferredPrompt.userChoice
-      deferredPrompt = null
-      atualizarBotaoInstalarApp()
-    }
-
-    function bindEvents() {
+    function bindEvents(){
       document.querySelectorAll('.tabbar button').forEach(btn => {
-        btn.addEventListener('click', () => trocarTela(btn.dataset.screen))
-      })
+        btn.addEventListener('click', () => trocarTela(btn.dataset.screen));
+      });
 
       document.querySelectorAll('.stat').forEach(stat => {
-        stat.addEventListener('click', () => abrirDocumentosPorStatus(stat.dataset.status || ''))
-      })
+        stat.addEventListener('click', () => abrirPorStatus(stat.dataset.status || ''));
+      });
 
-      $('btnLoginNovo').addEventListener('click', handleLoginFromNovo)
-      $('btnLimparLoginNovo').addEventListener('click', () => {
-        $('loginIdFunc').value = ''
-        $('loginSenha').value = ''
-      })
-      $('btnEntrar').addEventListener('click', () => trocarTela('novo'))
-      $('btnSair').addEventListener('click', logout)
-
-      $('tipoDocumento').addEventListener('change', () => {
-        const isOutro = $('tipoDocumento').value === 'OUTROS'
-        $('grupoTipoOutro').classList.toggle('hidden', !isOutro)
-        $('tipoDocumentoOutro').disabled = !isOutro
-        if (!isOutro) $('tipoDocumentoOutro').value = ''
-      })
+      $('btnGoLogin').addEventListener('click', () => trocarTela('novo'));
+      $('btnLogout').addEventListener('click', logout);
+      $('btnLogin').addEventListener('click', login);
+      $('btnLimparLogin').addEventListener('click', () => {
+        $('loginIdFunc').value = '';
+        $('loginSenha').value = '';
+      });
 
       $('telefoneSolicitante').addEventListener('input', () => {
-        $('telefoneSolicitante').value = formatPhone($('telefoneSolicitante').value)
-      })
+        $('telefoneSolicitante').value = formatPhone($('telefoneSolicitante').value);
+      });
 
-      $('btnRegistrarDocumento').addEventListener('click', registrarDocumento)
-      $('btnLimparFormulario').addEventListener('click', clearNovoForm)
+      $('tipoDocumento').addEventListener('change', () => {
+        const isOutro = $('tipoDocumento').value === 'OUTROS';
+        $('tipoOutroWrap').classList.toggle('hidden', !isOutro);
+        $('tipoDocumentoOutro').disabled = !isOutro;
+        if(!isOutro) $('tipoDocumentoOutro').value = '';
+      });
 
-      $('busca').addEventListener('input', renderDocuments)
-      $('filtroStatus').addEventListener('change', renderDocuments)
-      $('filtroTipo').addEventListener('change', renderDocuments)
-      $('filtroResponsavel').addEventListener('change', renderDocuments)
-      $('somenteComResposta').addEventListener('change', renderDocuments)
-      $('btnLimparFiltros').addEventListener('click', limparFiltros)
-      $('btnAtualizarLista').addEventListener('click', () => loadDocumentos(true))
+      $('btnRegistrarDocumento').addEventListener('click', registrarDocumento);
+      $('btnLimparNovo').addEventListener('click', clearNovoForm);
 
-      $('respostaDocumentoSelect').addEventListener('change', fillRespostaResumo)
-      $('btnSalvarResposta').addEventListener('click', salvarRespostaSsci)
-      $('btnLimparResposta').addEventListener('click', () => clearRespostaForm(true))
+      $('busca').addEventListener('input', renderLista);
+      $('filtroStatus').addEventListener('change', renderLista);
+      $('filtroTipo').addEventListener('change', renderLista);
+      $('filtroResponsavel').addEventListener('change', renderLista);
+      $('somenteComResposta').addEventListener('change', renderLista);
+      $('btnLimparFiltros').addEventListener('click', limparFiltros);
+      $('btnAtualizarLista').addEventListener('click', () => loadDocumentos(true));
 
-      $('btnAlterarSenha').addEventListener('click', alterarSenha)
-      $('btnLimparSenha').addEventListener('click', limparSenhaForm)
+      $('docRespostaSelect').addEventListener('change', fillResumoResposta);
+      $('btnSalvarResposta').addEventListener('click', salvarResposta);
+      $('btnLimparResposta').addEventListener('click', () => clearRespostaForm(true));
 
-      $('btnToggleAllHome').addEventListener('click', toggleAllHomeItems)
-      window.toggleHomeDetails = toggleHomeDetails
+      $('btnAlterarSenha').addEventListener('click', alterarSenha);
+      $('btnLimparSenha').addEventListener('click', clearSenhaForm);
 
       window.addEventListener('beforeinstallprompt', (event) => {
-        event.preventDefault()
-        deferredPrompt = event
-        atualizarBotaoInstalarApp()
-      })
-
-      window.addEventListener('appinstalled', () => {
-        deferredPrompt = null
-        atualizarBotaoInstalarApp()
-        showMessage('App instalado com sucesso.', 'ok')
-      })
+        event.preventDefault();
+        deferredPrompt = event;
+      });
     }
 
-    async function boot() {
-      bindEvents()
-      loadSession()
-      await loadMilitares()
-      updateTopbar()
-      updateNovoStatus()
-      updateRespostaStatus()
-      protocolTimestampPreview()
-      clearNovoForm()
-      clearRespostaForm(false)
-      await loadDocumentos(false)
-      if (userSession) await reloadSessionFromDb()
+    async function boot(){
+      bindEvents();
+      loadSession();
+      await loadMilitares();
+      updateTop();
+      clearNovoForm();
+      clearRespostaForm(false);
+      await loadDocumentos(false);
+      if(userSession) await reloadSessionFromDb();
 
-      if ('serviceWorker' in navigator) {
+      if('serviceWorker' in navigator){
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js').catch(() => {})
-        })
+          navigator.serviceWorker.register('./sw.js').catch(() => {});
+        });
       }
     }
 
-    boot()
+    boot();
   </script>
 </body>
 </html>
