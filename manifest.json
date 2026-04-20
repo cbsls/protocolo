@@ -1,12 +1,12 @@
 {
-  "name": "📄 Entrada de Documentos • CB SLS",
-  "short_name": "Documentos",
+  "name": "📄 Protocolo SSCI • CB SLS",
+  "short_name": "Protocolo SSCI",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui"],
-  "background_color": "#efeae2",
-  "theme_color": "#075E54",
+  "background_color": "#f5efe6",
+  "theme_color": "#c7b08a",
   "orientation": "portrait",
   "icons": [
     {
