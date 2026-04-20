@@ -372,6 +372,7 @@
 <body>
 
   <button id="installBtn" type="button">📲 Instalar app</button>
+  <button id="manualHelpBtn" type="button" class="btn-mini sec" style="position:fixed;left:14px;bottom:88px;z-index:60;width:auto;min-width:unset;padding:10px 12px;border-radius:999px;box-shadow:0 8px 22px rgba(0,0,0,.18);">❔ Como instalar</button>
   <div id="installHint">
     <button id="installHintClose" type="button">×</button>
     <strong>📱 Instalar como app</strong><br>
@@ -1501,6 +1502,7 @@
       $('btnLimparSenha').addEventListener('click', clearSenhaForm);
 
       $('installBtn').addEventListener('click', instalarApp);
+      $('manualHelpBtn').addEventListener('click', showManualInstallBox);
       $('installHintClose').addEventListener('click', hideInstallHint);
       $('manualInstallClose').addEventListener('click', hideManualInstallBox);
       $('manualInstallOk').addEventListener('click', hideManualInstallBox);
@@ -1532,10 +1534,6 @@
       if(userSession) await reloadSessionFromDb();
 
       const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-      const isAndroid = /android/i.test(navigator.userAgent);
-      if(!isStandaloneMode() && (isIOS || isAndroid)){
-        setTimeout(showInstallButton, 1200);
-      }
       if(isIOS && !isStandaloneMode()){
         setTimeout(showInstallHint, 2500);
       }
