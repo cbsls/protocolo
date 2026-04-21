@@ -249,17 +249,39 @@
       border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px;box-shadow:var(--shadow);
     }
     .tabbar{
-      position:fixed;left:50%;transform:translateX(-50%);bottom:10px;z-index:30;
-      width:min(980px,calc(100% - 14px));background:rgba(255,253,249,.97);
-      border:1px solid var(--line);border-radius:22px;box-shadow:0 10px 24px rgba(0,0,0,.14);
-      padding:8px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;
-      backdrop-filter:blur(14px)
-    }
-    .tabbar button{
-      background:transparent;color:#4f4f4f;padding:10px 6px;border-radius:14px;font-size:12px;border:none
-    }
-    .tabbar button.active{background:#eee2d0;color:#392b18;font-weight:700}
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:10px;
+  z-index:30;
+  width:min(980px,calc(100% - 14px));
+  background:rgba(255,253,249,.97);
+  border:1px solid var(--line);
+  border-radius:22px;
+  box-shadow:0 10px 24px rgba(0,0,0,.14);
+  padding:10px; /* 👈 levemente maior */
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+  backdrop-filter:blur(14px);
+}
 
+.tabbar button{
+  background:transparent;
+  color:#4f4f4f;
+  padding:12px 6px; /* 👈 melhor toque */
+  border-radius:14px;
+  font-size:14px; /* 👈 AQUI aumenta a fonte */
+  border:none;
+  font-weight:600;
+  line-height:1.2;
+}
+
+.tabbar button.active{
+  background:#eee2d0;
+  color:#392b18;
+  font-weight:700;
+}
     #installHint{
       position:fixed;
       right:14px;
