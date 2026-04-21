@@ -8,6 +8,7 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icon.png" />
   <link rel="apple-touch-icon" href="icon.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Protocolo SSCI" />
@@ -56,12 +57,12 @@
       box-shadow:0 2px 10px rgba(0,0,0,.12);
     }
     .topbar-inner{
-  display:flex;
-  justify-content:space-between;
-  align-items:center; /* centraliza vertical */
-  gap:8px;
-  padding:10px 12px;
-}
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+    }
     .brand{
       display:flex;align-items:center;gap:10px;min-width:0;flex:1;
     }
@@ -71,55 +72,54 @@
       background:rgba(255,255,255,.45);
       border:1px solid rgba(255,255,255,.7);
       font-size:20px;flex-shrink:0;
-   }
-.brand-title{
-  font-size:1rem;
-  font-weight:700;
-  line-height:1.15;
-}
-
-.brand-sub{
-  font-size:11px;
-  color:#1d1d1d;
-  opacity:.9;
-  margin-top:3px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.head-actions{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  justify-content:flex-end;
-}
-
-.pill{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:26px;
-  padding:4px 8px;
-  border-radius:999px;
-  font-size:10px;
-  font-weight:700;
-  background:rgba(255,255,255,.55);
-  border:1px solid rgba(255,255,255,.75);
-  color:#111;
-  white-space:nowrap;
-}
+    }
+    .brand-title{
+      font-size:1rem;
+      font-weight:700;
+      line-height:1.15;
+    }
+    .brand-sub{
+      font-size:11px;
+      color:#1d1d1d;
+      opacity:.9;
+      margin-top:3px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .head-actions{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:26px;
+      padding:4px 8px;
+      border-radius:999px;
+      font-size:10px;
+      font-weight:700;
+      background:rgba(255,255,255,.55);
+      border:1px solid rgba(255,255,255,.75);
+      color:#111;
+      white-space:nowrap;
+    }
     .btn-mini{
-  border:0;
-  border-radius:999px;
-  padding:4px 8px;
-  min-height:26px;
-  font-size:10px;
-  font-weight:600;
-  cursor:pointer;
-  background:rgba(255,255,255,.58);
-  color:#111;
-}
+      border:0;
+      border-radius:999px;
+      padding:4px 8px;
+      min-height:26px;
+      font-size:10px;
+      font-weight:600;
+      cursor:pointer;
+      background:rgba(255,255,255,.58);
+      color:#111;
+      width:auto;
+    }
     .btn-mini.sec{background:rgba(0,0,0,.08)}
     .screen{display:none;padding:12px}
     .screen.active{display:block}
@@ -249,43 +249,43 @@
       border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px;box-shadow:var(--shadow);
     }
     .tabbar{
-      position:fixed;left:50%;transform:translateX(-50%);bottom:10px;z-index:30;
-      width:min(980px,calc(100% - 14px));background:rgba(255,253,249,.97);
-      border:1px solid var(--line);border-radius:22px;box-shadow:0 10px 24px rgba(0,0,0,.14);
-      padding:8px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;
-      backdrop-filter:blur(14px)
-    }
-    .tabbar button{
-      background:transparent;color:#4f4f4f;padding:10px 6px;border-radius:14px;font-size:12px;border:none
-    }
-    .tabbar button.active{background:#eee2d0;color:#392b18;font-weight:700}
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:10px;
+  z-index:30;
+  width:min(980px,calc(100% - 14px));
+  background:rgba(255,253,249,.97);
+  border:1px solid var(--line);
+  border-radius:22px;
+  box-shadow:0 10px 24px rgba(0,0,0,.14);
+  padding:10px; /* 👈 levemente maior */
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+  backdrop-filter:blur(14px);
+}
 
-    #installBtn{
-      position:fixed;
-      right:14px;
-      bottom:88px;
-      z-index:60;
-      width:auto;
-      min-width:unset;
-      padding:12px 16px;
-      border:none;
-      border-radius:999px;
-      background:#075E54;
-      color:#fff;
-      font-size:14px;
-      font-weight:700;
-      box-shadow:0 8px 22px rgba(0,0,0,.22);
-      display:none;
-      align-items:center;
-      gap:8px;
-      animation:installPulse 1.8s infinite;
-    }
-    #installBtn.show{display:inline-flex}
-    #installBtn:hover{transform:translateY(-1px)}
+.tabbar button{
+  background:transparent;
+  color:#4f4f4f;
+  padding:12px 6px; /* 👈 melhor toque */
+  border-radius:14px;
+  font-size:14px; /* 👈 AQUI aumenta a fonte */
+  border:none;
+  font-weight:600;
+  line-height:1.2;
+}
+
+.tabbar button.active{
+  background:#eee2d0;
+  color:#392b18;
+  font-weight:700;
+}
     #installHint{
       position:fixed;
       right:14px;
-      bottom:150px;
+      top:72px;
       z-index:60;
       max-width:280px;
       padding:11px 12px;
@@ -311,12 +311,104 @@
       font-weight:700;
       cursor:pointer;
     }
-    @keyframes installPulse{
-      0%{transform:scale(1)}
-      50%{transform:scale(1.03)}
-      100%{transform:scale(1)}
+
+    #manualInstallBox{
+      position:fixed;
+      inset:0;
+      z-index:90;
+      background:rgba(0,0,0,.38);
+      display:none;
+      align-items:flex-end;
+      justify-content:center;
+      padding:14px;
+    }
+    #manualInstallBox.show{display:flex}
+    #manualInstallCard{
+      width:min(520px,100%);
+      background:#fffdf9;
+      border:1px solid var(--line);
+      border-radius:22px;
+      box-shadow:0 18px 40px rgba(0,0,0,.25);
+      padding:16px;
+    }
+    #manualInstallCard h3{
+      margin:0 0 8px;
+      font-size:18px;
+    }
+    #manualInstallCard p{
+      margin:0 0 10px;
+      color:#333;
+      line-height:1.5;
+      font-size:14px;
+    }
+    #manualInstallCard ol{
+      margin:0 0 12px 18px;
+      padding:0;
+      color:#333;
+      line-height:1.6;
+      font-size:14px;
+    }
+    #manualInstallActions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:8px;
     }
 
+    .install-card{
+      display:none;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 14px;
+      background:#f8f3ea;
+      border:1px solid var(--line);
+      border-radius:16px;
+      margin-bottom:12px;
+      box-shadow:var(--shadow);
+    }
+    .install-card.show{display:flex}
+    .install-card-text{
+      min-width:0;
+      flex:1;
+    }
+    .install-card-title{
+      font-size:14px;
+      font-weight:700;
+      color:#3b2c17;
+      margin-bottom:4px;
+    }
+    .install-card-sub{
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.4;
+    }
+    .install-card-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-shrink:0;
+    }
+    .install-card .btn-install-discreet{
+      width:auto;
+      min-width:unset;
+      padding:10px 12px;
+      border-radius:999px;
+      background:#075E54;
+      color:#fff;
+      font-size:12px;
+      font-weight:700;
+    }
+    .install-card .btn-close-discreet{
+      width:auto;
+      min-width:unset;
+      padding:8px 10px;
+      border-radius:999px;
+      background:#eee3d3;
+      color:#333;
+      font-size:12px;
+      font-weight:700;
+    }
     .hidden{display:none!important}
     @media (max-width:780px){
       .app{max-width:560px}
@@ -324,17 +416,11 @@
       .brand-title{font-size:.95rem}
       .brand-sub{white-space:normal}
       .grid-2,.grid-3,.actions,.toolbar,.stats{grid-template-columns:1fr}
+      #installHint{top:106px;left:12px;right:12px;max-width:none}
     }
   </style>
 </head>
 <body>
-
-  <button id="installBtn" type="button">📲 Instalar app</button>
-  <div id="installHint">
-    <button id="installHintClose" type="button">×</button>
-    <strong>📱 Instalar como app</strong><br>
-    No iPhone/iPad, toque em <strong>Compartilhar</strong> e depois em <strong>Adicionar à Tela de Início</strong>.
-  </div>
 
   <div class="app">
     <div class="topbar">
@@ -343,9 +429,7 @@
           <div class="logo">📄</div>
           <div>
             <div class="brand-title">PROTOCOLO SSCI</div>
-            <div class="brand-sub">
-              Entrada de documentos
-              </div>
+            <div class="brand-sub">Entrada de documentos</div>
           </div>
         </div>
         <div class="head-actions">
@@ -360,6 +444,17 @@
     <div id="mensagem" class="msg"></div>
 
     <section id="screen-home" class="screen active">
+      <div id="installCard" class="install-card">
+        <div class="install-card-text">
+          <div class="install-card-title">📲 Instalar como app</div>
+          <div class="install-card-sub">Adicione à tela inicial para abrir em modo app e tela cheia.</div>
+        </div>
+        <div class="install-card-actions">
+          <button id="btnInstallCard" class="btn-install-discreet" type="button">Instalar</button>
+          <button id="btnCloseInstallCard" class="btn-close-discreet" type="button">×</button>
+        </div>
+      </div>
+
       <div class="card">
         <h2>📊 Resumo dos Protocolos</h2>
         <div class="sub">Toque em uma caixa para abrir a lista já filtrada.</div>
@@ -747,8 +842,10 @@
 
       if(userSession){
         $('loginStatus').innerHTML = `✅ Logado como <strong>${escapeHtml(userSession.nome_guerra)}</strong> • Id Func <strong>${escapeHtml(userSession.id_func)}</strong>`;
+        $('loginBox').classList.add('hidden');
       } else {
         $('loginStatus').textContent = 'Nenhum militar logado.';
+        $('loginBox').classList.remove('hidden');
       }
 
       if(isAdmin()){
@@ -1330,35 +1427,23 @@
       renderLista();
     }
 
-
     function isStandaloneMode(){
       return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
     }
 
-    function showInstallButton(){
+    function showInstallCard(){
       if(isStandaloneMode()) return;
-      const btn = $('installBtn');
-      if(btn) btn.classList.add('show');
+      if(localStorage.getItem('protocolo_install_card_closed') === '1') return;
+      const card = $('installCard');
+      if(card) card.classList.add('show');
     }
 
-    function hideInstallButton(){
-      const btn = $('installBtn');
-      if(btn) btn.classList.remove('show');
-    }
-
-    function showInstallHint(){
-      if(isStandaloneMode()) return;
-      const hint = $('installHint');
-      if(!hint) return;
-      hint.classList.add('show');
-      clearTimeout(installHintTimer);
-      installHintTimer = setTimeout(() => hint.classList.remove('show'), 9000);
-    }
-
-    function hideInstallHint(){
-      const hint = $('installHint');
-      if(hint) hint.classList.remove('show');
-      clearTimeout(installHintTimer);
+    function hideInstallCard(savePreference=false){
+      const card = $('installCard');
+      if(card) card.classList.remove('show');
+      if(savePreference){
+        localStorage.setItem('protocolo_install_card_closed', '1');
+      }
     }
 
     async function instalarApp(){
@@ -1366,12 +1451,12 @@
       deferredPrompt.prompt();
       const choice = await deferredPrompt.userChoice;
       deferredPrompt = null;
-      hideInstallButton();
+
       if(choice && choice.outcome === 'accepted'){
+        hideInstallCard(true);
         showMessage('App instalado com sucesso.', 'ok');
       }
     }
-
 
     function bindEvents(){
       document.querySelectorAll('.tabbar button').forEach(btn => {
@@ -1419,19 +1504,18 @@
       $('btnAlterarSenha').addEventListener('click', alterarSenha);
       $('btnLimparSenha').addEventListener('click', clearSenhaForm);
 
-      $('installBtn').addEventListener('click', instalarApp);
-      $('installHintClose').addEventListener('click', hideInstallHint);
+      $('btnInstallCard').addEventListener('click', instalarApp);
+      $('btnCloseInstallCard').addEventListener('click', () => hideInstallCard(true));
 
       window.addEventListener('beforeinstallprompt', (event) => {
         event.preventDefault();
         deferredPrompt = event;
-        showInstallButton();
+        showInstallCard();
       });
 
       window.addEventListener('appinstalled', () => {
         deferredPrompt = null;
-        hideInstallButton();
-        hideInstallHint();
+        hideInstallCard(true);
       });
     }
 
@@ -1445,9 +1529,8 @@
       await loadDocumentos(false);
       if(userSession) await reloadSessionFromDb();
 
-      const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-      if(isIOS && !isStandaloneMode()){
-        setTimeout(showInstallHint, 2500);
+      if(isStandaloneMode()){
+        hideInstallCard(true);
       }
 
       if('serviceWorker' in navigator){
